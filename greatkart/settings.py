@@ -16,11 +16,33 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# SECRET_PATH
+import json
+import os
+from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
+
+# Secret_KEY
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+MY_EMAIL = get_secret("MY_EMAIL")
+EMAIL_PASSWORD = get_secret("EMAIL_PASSWORD")
+SECRET_KEY = get_secret("DJANGO_SECRET_KEY")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bn1ghbu#yo9-&+#t)ktlyps$(79ola=ohxdina!z31qkz0oy1n'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -145,3 +167,10 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = MY_EMAIL
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = 'True'

@@ -44,7 +44,7 @@ class Account(AbstractBaseUser):
     last_name       = models.CharField(max_length=50)
     username        = models.CharField(max_length=50, unique=True)
     email           = models.EmailField(max_length=100, unique=True)
-    phone_number    = PhoneNumberField(region='KR',max_length=11)
+    phone_number    = PhoneNumberField(region='KR',max_length=13)
 
     # required
     date_joined     = models.DateTimeField(auto_now_add=True)
