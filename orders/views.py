@@ -6,7 +6,99 @@ import datetime
 from .models import Order, Payment
 from django.conf import settings
 import json
+import requests
+import datetime
 # Create your views here.
+last_order_number = 0
+
+def kakao_pay(request):
+    BASE_URL = "http://127.0.0.1:8000"
+    if request.method == 'POST':
+
+        current_user = request.user
+    
+        # If the cart count is less than or equal to 0, then redirect back to shop
+        cart_items = CartItem.objects.filter(user=current_user)
+        cart_count = cart_items.count()
+        if cart_count <= 0:
+            return redirect('store')
+        
+        # total payment
+        grand_total = 0
+        total =0
+        tax =0
+        quantity =0
+
+        
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            quantity += (cart_item.quantity)
+
+        tax = int(total * 0.1) # 부가가치세
+        grand_total = tax + total
+        
+        # Order number
+        global last_order_number
+
+        KAKAO_PAY = settings.KAKAO_PAY
+        URL = 'https://kapi.kakao.com/v1/payment/ready'
+        headers = {
+            "Authorization": "KakaoAK " + KAKAO_PAY,
+            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",    
+        }
+        data = {
+            'cid': 'TC0ONETIME',  # test code
+            'partner_order_id': last_order_number,  
+            'partner_user_id': request.user,  
+            'item_name': f'{cart_item.product.product_name} 상품등 전체 총 {cart_count}건', 
+            'quantity': quantity,  
+            'total_amount': grand_total,  
+            'tax_free_amount': 0,  
+            'approval_url': BASE_URL + '/orders/kakao_pay_approval/',  
+            'cancel_url': BASE_URL + '/orders/kakao_pay_cancel/',  
+            'fail_url': BASE_URL + '/orders/kakao_pay_cancel/',  
+        }
+        res = requests.post(URL, headers=headers, params=data)
+
+        request.session['tid'] = res.json()['tid']
+        next_url = res.json()['next_redirect_pc_url']
+        return redirect(next_url)
+        
+def kakao_pay_approval(request):
+    
+    KAKAO_PAY = settings.KAKAO_PAY
+    URL = 'https://kapi.kakao.com/v1/payment/approve'
+    headers = {
+        "Authorization": "KakaoAK " + KAKAO_PAY,
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",    
+    }
+    data = {
+        'cid': 'TC0ONETIME',  # test code
+        "tid": request.session['tid'],
+        'partner_order_id': last_order_number,  
+        'partner_user_id': request.user,
+        "pg_token": request.GET.get("pg_token"),
+    }
+    res = requests.post(URL, headers=headers, params=data).json()
+    
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=last_order_number)
+    payment = Payment(
+        user = request.user,
+        payment_id = res['tid'],
+        payment_method = 'KaKao Pay',
+        amount_paid = res['amount']['total'],
+        status = 'COMPLETED',
+    )
+    payment.save()
+    order.payment = payment
+    order.is_ordered = True
+    order.save()
+    return render(request, 'orders/payment-success.html')
+
+
+def kakao_pay_cancel(request):
+    return render(request, 'orders/payment-failed.html')
+
 def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
@@ -28,9 +120,6 @@ def payments(request):
 
     return render(request, 'orders/payments.html')
 
-def kakao_pay(request):
-    
-    return redirect('checkout')
 
 def place_order(request, total=0, quantity=0):
     PAY_PAL = settings.PAY_PAL
@@ -73,6 +162,7 @@ def place_order(request, total=0, quantity=0):
             data.save()
             
             # Generate order number
+            global last_order_number
             yr = int(datetime.date.today().strftime('%Y'))
             dt = int(datetime.date.today().strftime('%d'))
             mt = int(datetime.date.today().strftime('%m'))
@@ -80,6 +170,7 @@ def place_order(request, total=0, quantity=0):
             current_date = d.strftime("%Y%m%d") #20210305
             order_number = current_date + str(data.id)
             data.order_number = order_number
+            last_order_number = order_number
             data.save()
             
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)

@@ -178,3 +178,6 @@ EMAIL_USE_TLS = 'True'
 # PAYPAL
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 PAY_PAL = get_secret("PAY_PAL")
+
+# KAKAO_PAY
+KAKAO_PAY = get_secret("KAKAO_PAY")
