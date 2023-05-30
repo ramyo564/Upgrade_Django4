@@ -113,8 +113,8 @@
                 </div>
           <form method="post" action="{% url 'kakao_pay' %}">
             {% csrf_token %}
-              <input class="btn btn-primary btn-block" type="submit" value="KaKao Pay">
-
+              <input class="btn btn-warning btn-block" style="color: black; background-color: #FFD600;
+              border-color: #FFD600; font-weight: bolder;" type="submit" value="KakaoPay">
           </form>  
 
             </div> <!-- card-body.// -->
@@ -158,6 +158,8 @@
       var csrftoken = getCookie('csrftoken');
       var orderID = "{{order.order_number}}"
       var payment_method = 'PayPal'
+      var redirect_url = "{% url 'order_complete' %}"
+      // Render the PayPal button into #paypal-button-container
       paypal.Buttons({
 
         style: {
@@ -199,11 +201,11 @@
 							status: details.status,
 						}),
           })
-					/*
+					
 				  .then((response) => response.json())
 				  .then((data) => {
 						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
-					});*/
+					});
 				}
       });
     }
