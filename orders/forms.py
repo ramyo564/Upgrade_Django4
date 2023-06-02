@@ -15,5 +15,6 @@ class OrderForm(forms.ModelForm):
             'country',
             'state',
             'city',
-            'order_note'
+            'order_note',
+            'post_code'
             ]

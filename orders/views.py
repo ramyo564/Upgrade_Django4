@@ -257,6 +257,7 @@ def place_order(request, total=0, quantity=0):
             data.country = form.cleaned_data['country']
             data.state = form.cleaned_data['state']
             data.city = form.cleaned_data['city']
+            data.post_code = form.cleaned_data['post_code']
             data.order_note = form.cleaned_data['order_note']
             data.order_total = grand_total
             data.tax = tax
