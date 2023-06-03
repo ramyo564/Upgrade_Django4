@@ -47,49 +47,42 @@
                 <!-- card-body.// -->
               </div>
             </article>
+
+
+
             <!-- filter-group .// -->
+
+            
+
+            {% for key, values in my_dict.items %}
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+                <a href="#" data-toggle="collapse" data-target="#collapse_{{forloop.counter}}" aria-expanded="true" class="">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  <h6 class="title">Sizes
-                  </h6>
+                  <h6 class="title">{{ key }}</h6>
                 </a>
               </header>
-              <div class="filter-content collapse show" id="collapse_4" style="">
+              <div class="filter-content collapse show" id="collapse_{{forloop.counter}}" style="">
                 <div class="card-body">
+                  {% for value in values  %}
                   <label class="checkbox-btn">
-                    <input type="checkbox">
-                    <span class="btn btn-light">
-                      XS
+                    <input type="checkbox" id="{{ key }}_{{ forloop.counter }}">
+                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter }}')">
+                      {{ value }}
                     </span>
                   </label>
-
-                  <label class="checkbox-btn">
-                    <input type="checkbox">
-                    <span class="btn btn-light">
-                      SM
-                    </span>
-                  </label>
-
-                  <label class="checkbox-btn">
-                    <input type="checkbox">
-                    <span class="btn btn-light">
-                      LG
-                    </span>
-                  </label>
-
-                  <label class="checkbox-btn">
-                    <input type="checkbox">
-                    <span class="btn btn-light">
-                      XXL
-                    </span>
-                  </label>
+                  {% endfor %}
                 </div>
                 <!-- card-body.// -->
               </div>
             </article>
+            {% endfor %}
+
             <!-- filter-group .// -->
+
+
+
+
 
             <article class="filter-group">
               <header class="card-header">
@@ -223,5 +216,11 @@
     <!-- container .// -->
   </section>
   <!-- ========================= SECTION CONTENT END// ========================= -->
-
+  <script>
+    function toggleSelection(checkboxId) {
+      var checkbox = document.getElementById(checkboxId);
+      var span = checkbox.nextElementSibling;
+      span.classList.toggle("selected");
+    }
+    </script>
 {% endblock %}

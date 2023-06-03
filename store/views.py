@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Category, ReviewRating, ProductGallery
+from .models import Product, Category, ReviewRating, ProductGallery, Variation, VariationManager
 from carts.models import CartItem
 from carts.views import _cart_id
 from django.http import HttpResponse
@@ -16,11 +16,36 @@ def store(request, category_slug=None):
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=categories, is_available=True)
+        products = Product.objects.filter(category=categories, is_available=True).order_by("-created_date")
         paginator = Paginator(products,9)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
+        #
+        my_dict=[]
+        #
+        id = []
+        variation_category = []
+        options_key_value = []
+            
+        for product in products.values('id'):
+            id.append(product['id'])
+        for i in id:    
+            product_test = Product.objects.get(id=i)  
+            variations = product_test.variation_set.all()
+            for variation in variations:
+                if variation.variation_category not in variation_category:
+                    variation_category.append(variation.variation_category)
+                
+            # print(variation_category) variation_category 중복없이 뽑아옴
+            
+
+            for variation_key in variation_category:
+                items = product_test.variation_set.filter(variation_category=variation_key)
+
+                options_key_value.append(list(items.values('variation_category','variation_value')))
+
+
     else:
         products = Product.objects.all().filter(is_available=True).order_by('id')
         paginator = Paginator(products,9)
@@ -28,9 +53,59 @@ def store(request, category_slug=None):
         paged_products = paginator.get_page(page)
         product_count = products.count()
 
+        id = []
+        variation_category = []
+        options_key_value = []        
+        
+        for product in products.values('id'):
+            id.append(product['id'])
+        for i in id:    
+            product_test = Product.objects.get(id=i)  
+            variations = product_test.variation_set.all()
+            for variation in variations:
+                if variation.variation_category not in variation_category:
+                    variation_category.append(variation.variation_category)
+                
+        # print(variation_category) # variation_category 중복없이 뽑아옴
+            
+
+            for variation_key in variation_category:
+                items = product_test.variation_set.filter(variation_category=variation_key)
+
+                options_key_value.append(list(items.values('variation_category','variation_value')))
+
+    # print(options_key_value)
+    
+    colors = set()
+    sizes = set()
+    
+    for item in options_key_value:
+        for variation in item:
+            if variation['variation_category'] == 'color':
+                colors.add(variation['variation_value'])
+            elif variation['variation_category'] == 'size':
+                sizes.add(variation['variation_value'])
+
+    # print("Colors:", colors)
+    # print("Sizes:", sizes)
+    
+    option_colors = sorted(list(colors))
+    option_sizes = sorted(list(sizes))
+    
+    my_dict = {
+        "colors":option_colors,
+        "sizes":option_sizes
+    }
+
+    
     context = {
         'products': paged_products,
         'product_count': product_count,
+        'my_dict':my_dict,
+        # 'color':color,
+        # 'size':size,
+
+
     }
     return render(request, 'store/store.html', context)
 

@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from accounts.models import Account
 from django.db.models import Avg, Count
+import inspect
 
 # Create your models here.
 class Product(models.Model):
@@ -65,6 +66,10 @@ class Variation(models.Model):
 
     def __str__(self):
         return self.variation_value
+    
+
+    
+
     
 class ReviewRating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
