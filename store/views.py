@@ -8,6 +8,10 @@ from django.db.models import Q
 from .forms import ReviewForm
 from django.contrib import messages
 from orders.models import OrderProduct
+import json
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 
 # Create your views here.
 def store(request, category_slug=None):
@@ -76,6 +80,7 @@ def store(request, category_slug=None):
 
     # print(options_key_value)
     
+
     colors = set()
     sizes = set()
     
@@ -107,6 +112,7 @@ def store(request, category_slug=None):
 
 
     }
+    
     return render(request, 'store/store.html', context)
 
 def product_detail(request, category_slug, product_slug):
@@ -175,3 +181,85 @@ def submit_review(request, product_id):
                 data.save()
                 messages.success(request, 'Thank you! Your review has been submitted.')
                 return redirect(url)
+
+def update_results(request):
+    if request.method == 'POST':
+        
+        selected_values = json.loads(request.POST.get('selectedValues'))
+        selected_sort_option = request.POST.get('selectedSortOption')
+            
+        # JSON 쓸 데 없는 문자 지우기
+        fix_selected_values = []
+        for i in range(0, len(selected_values)):
+            x = selected_values[i].strip('\n').lstrip().rstrip()
+            fix_selected_values.append(x)
+            
+        
+        # print(f"selected_values {fix_selected_values}")
+        # print(f"selected_sort_option {selected_sort_option}")
+        
+        
+        # 옵션에 맞는 아이템 필터링
+        matching_products = Product.objects.filter(variation__variation_value__in=fix_selected_values).order_by("-created_date")
+        paginator = Paginator(matching_products,9)
+        page = request.GET.get('page')
+        paged_products = paginator.get_page(page)
+        product_count = matching_products.count()
+
+        id = []
+        variation_category = []
+        options_key_value = []        
+        
+        for product in matching_products.values('id'):
+            id.append(product['id'])
+        for i in id:    
+            product_test = Product.objects.get(id=i)  
+            variations = product_test.variation_set.all()
+            for variation in variations:
+                if variation.variation_category not in variation_category:
+                    variation_category.append(variation.variation_category)
+                
+        # print(variation_category) # variation_category 중복없이 뽑아옴
+            
+
+            for variation_key in variation_category:
+                items = product_test.variation_set.filter(variation_category=variation_key)
+
+                options_key_value.append(list(items.values('variation_category','variation_value')))
+
+
+
+        # # 갱신된 값이 있을 때 끝
+        colors = set()
+        sizes = set()
+        
+        for item in options_key_value:
+            for variation in item:
+                if variation['variation_category'] == 'color':
+                    colors.add(variation['variation_value'])
+                elif variation['variation_category'] == 'size':
+                    sizes.add(variation['variation_value'])
+
+        # print("Colors:", colors)
+        # print("Sizes:", sizes)
+        
+        option_colors = sorted(list(colors))
+        option_sizes = sorted(list(sizes))
+        
+        my_dict = {
+            "colors":option_colors,
+            "sizes":option_sizes
+        }
+
+        
+        context = {
+            'products': paged_products,
+            'product_count': product_count,
+            'my_dict':my_dict,
+        }
+    
+    
+    else:
+        print('error')
+        
+    return render(request, 'store/filtered_store.html', context=context)

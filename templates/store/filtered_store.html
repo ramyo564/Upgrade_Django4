@@ -1,21 +1,9 @@
-{% extends 'base.html' %}
+
 {% load static %}
 {% load humanize %}
-{% block content %}
-  <!-- ========================= SECTION PAGETOP ========================= -->
-  <section class="section-pagetop bg">
-    <div class="container">
-      {% if 'search' in request.path  %}
-        <h2 class="title-page">Search Result</h2>
-      {% else %}
-        <h2 class="title-page">Our Store</h2>
-      {% endif %}
-      
 
-    </div>
-    <!-- container // -->
-  </section>
-  <!-- ========================= SECTION INTRO END// ========================= -->
+{% block content %}
+
   <!-- ========================= SECTION CONTENT ========================= -->
   <section class="section-content padding-y">
     <div class="container">
@@ -226,9 +214,8 @@
 
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          var response = xhr.responseText;
-          var container = document.querySelector(".section-content .container");
-          container.innerHTML = response;
+          console.log(xhr.responseText);
+          // Handle response from the server
         }
       };
 
