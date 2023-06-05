@@ -1,9 +1,21 @@
-
+{% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-
 {% block content %}
+  <!-- ========================= SECTION PAGETOP ========================= -->
+  <section class="section-pagetop bg">
+    <div class="container">
+      {% if 'search' in request.path  %}
+        <h2 class="title-page">Search Result</h2>
+      {% else %}
+        <h2 class="title-page">Our Store</h2>
+      {% endif %}
+      
 
+    </div>
+    <!-- container // -->
+  </section>
+  <!-- ========================= SECTION INTRO END// ========================= -->
   <!-- ========================= SECTION CONTENT ========================= -->
   <section class="section-content padding-y">
     <div class="container">
@@ -44,18 +56,21 @@
 
             {% for key, values in my_dict.items %}
             <article class="filter-group">
+                
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_{{forloop.counter}}" aria-expanded="true" class="">
+                <a href="#" data-toggle="collapse" data-target="#collapse_{{forloop.counter|add:1 }}" aria-expanded="true" class="">
                   <i class="icon-control fa fa-chevron-down"></i>
+                  
                   <h6 class="title">{{ key }}</h6>
                 </a>
               </header>
-              <div class="filter-content collapse show" id="collapse_{{forloop.counter}}" style="">
+              <div class="filter-content collapse show" id="collapse_{{forloop.counter|add:1}}" style="">
                 <div class="card-body">
+
                   {% for value in values  %}
                   <label class="checkbox-btn">
-                    <input type="checkbox" id="{{ key }}_{{ forloop.counter }}">
-                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter }}')">
+                    <input type="checkbox" id="{{ key }}_{{ forloop.counter|add:1 }}">
+                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter|add:1 }}')">
                       {{ value }}
                     </span>
                   </label>
@@ -63,6 +78,7 @@
                 </div>
                 <!-- card-body.// -->
               </div>
+              
             </article>
             {% endfor %}
 
@@ -74,13 +90,13 @@
 
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+                <a href="#" data-toggle="collapse" data-target="#collapse_0" aria-expanded="true" class="">
                   <i class="icon-control fa fa-chevron-down"></i>
                   <h6 class="title">Sort by
                   </h6>
                 </a>
               </header>
-              <div class="filter-content collapse show" id="collapse_3" style="">
+              <div class="filter-content collapse show" id="collapse_0" style="">
                 <div class="card-body">
 
                   <div class="form-row">
@@ -189,60 +205,5 @@
     <!-- container .// -->
   </section>
   <!-- ========================= SECTION CONTENT END// ========================= -->
-
-  <!-- selected options effect -->
-  <script>
-    function toggleSelection(checkboxId) {
-      var checkbox = document.getElementById(checkboxId);
-      var span = checkbox.nextElementSibling;
-      span.classList.toggle("selected");
-    }
-  
-    function applyFilters(event) {
-      event.preventDefault(); // 기본 동작 차단
-  
-      var selectedValues = [];
-      var selectedElements = document.getElementsByClassName("selected");
-      for (var i = 0; i < selectedElements.length; i++) {
-        selectedValues.push(selectedElements[i].textContent.trim());
-      }
-  
-      var sortBySelect = document.getElementById("sort-by-select");
-      var selectedSortOption = sortBySelect.value;
-  
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "{% url 'second_update_results' %}");
-      xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-  
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-          // Handle response from the server
-        }
-      };
-  
-      var data = new FormData();
-      data.append("selectedValues", JSON.stringify(selectedValues));
-      data.append("selectedSortOption", selectedSortOption);
-  
-      xhr.send(data);
-  
-    }
-  
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === name + "=") {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-  </script>
-{% endblock %}
+  {% endblock %}
 
