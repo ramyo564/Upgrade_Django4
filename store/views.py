@@ -12,12 +12,23 @@ import json
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Avg, Count
+from django.utils.text import slugify
 
 # Create your views here.
 def store(request, category_slug=None):
     categories = None
     products = None
+    
+    # 카테고리 세션 초기화
+    try:
+        if request.session['category_name']:
+            print (request.session['category_name'])
+            del request.session['category_name']
 
+    except:
+        pass 
+    
+    
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=categories, is_available=True).order_by("-created_date")
@@ -25,8 +36,8 @@ def store(request, category_slug=None):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
-        request.session['catefory_session_used'] = [] 
-        #
+
+        
         my_dict=[]
         #
         id = []
@@ -116,20 +127,224 @@ def store(request, category_slug=None):
     
     return render(request, 'store/test.html', context)
 
-def test(request):
+def test(request, category_slug=None):
     if request.method == 'POST':
         sort_by_options = request.POST.get('sort_by')
         value_options = request.POST.getlist('key')
         previous_url = request.META.get('HTTP_REFERER', '')  # URL에 카테고리가 존재하는지 확인
         
-        print(f'sort_by_options : {sort_by_options}')
-        print(f'value_options : {value_options}')
+        
+        # print(f'sort_by_options : {sort_by_options}')
+        # print(f'value_options : {value_options}')
                 
-        # 주소창에 카테고리가 있는지 없는지
+        # 주소창에 카테고리 존재
         if 'category' in previous_url:
-            print('yes')
+
+            # url 에서 슬러그 뽑아내기
+            category_name_url = previous_url.split('/')
+            category_name = category_name_url[-2]
+            # session 초기화 및 새로 만들어서 카테고리 정보 담기
+            request.session["category_name"] = category_name
             
+            # 뽑아낸 slug 로 상품 필터링
+            products = Product.objects.all().filter(is_available=True, category__slug = category_name)
+
+            # 옵션을 선택했을때
+            if len(value_options) > 0:
+                products = products.filter(variation__variation_value__in = value_options)
+                
+                # 낮은 가격순
+                lowToHigh = products.order_by('price')
+                # 높은 가격순
+                highToLow = products.order_by('-price')
+                # 신상품순
+                new = products.order_by('created_date')
+                # 평균 별점순
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                
+                if sort_by_options == "lowToHigh":
+                    products = lowToHigh
+                elif sort_by_options == "highToLow":
+                    products = highToLow
+                elif sort_by_options == "new":
+                    products = new
+                else:
+                    products = avg_review
+
+            # 옵션을 선택하지 않았을 때 -> 동일 카테고리 + sort by로 정렬
+            else:
+                
+                # 낮은 가격순
+                lowToHigh = products.order_by('price')
+                # 높은 가격순
+                highToLow = products.order_by('-price')
+                # 신상품순
+                new = products.order_by('created_date')
+                # 평균 별점순
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                print('3')
+                if sort_by_options == "lowToHigh":
+                    products = lowToHigh
+                elif sort_by_options == "highToLow":
+                    products = highToLow
+                elif sort_by_options == "new":
+                    products = new
+                else:
+                    products = avg_review
+            
+            # 옵션 여부 불러와야함 
+         
+            my_dict=[]
+            id = []
+            variation_category = []
+            options_key_value = []
+                
+            for product in products.values('id'):
+                id.append(product['id'])
+            for i in id:    
+                product_test = Product.objects.get(id=i)  
+                variations = product_test.variation_set.all()
+                for variation in variations:
+                    if variation.variation_category not in variation_category:
+                        variation_category.append(variation.variation_category)
+                    
+                # print(variation_category) variation_category 중복없이 뽑아옴
+                
+
+                for variation_key in variation_category:
+                    items = product_test.variation_set.filter(variation_category=variation_key)
+
+                    options_key_value.append(list(items.values('variation_category','variation_value')))
+        
+        # 옵션 선택한 상태에서 한 번 더 선택할 때 -> 주소창은 test 옵션 존재할 때      
+        elif 'test' in previous_url and len(value_options) != 0:
+ 
+
+            # 이전에 만들어 놓았던 세션에서 카테고리 정보 갖고오기
+            category_name = request.session.get("category_name")
+
+            # 뽑아낸 카테고리 정보로 상품 필터링
+            products = Product.objects.all().filter(is_available=True, category__slug = category_name)
+
+            # 옵션을 선택했을때
+            if len(value_options) > 0:
+                products = products.filter(variation__variation_value__in = value_options)
+                
+                # 낮은 가격순
+                lowToHigh = products.order_by('price')
+                # 높은 가격순
+                highToLow = products.order_by('-price')
+                # 신상품순
+                new = products.order_by('created_date')
+                # 평균 별점순
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                
+                if sort_by_options == "lowToHigh":
+                    products = lowToHigh
+                elif sort_by_options == "highToLow":
+                    products = highToLow
+                elif sort_by_options == "new":
+                    products = new
+                else:
+                    products = avg_review
+
+            # 옵션을 선택하지 않았을 때 -> 동일 카테고리 + sort by로 정렬
+            else:
+                
+                # 낮은 가격순
+                lowToHigh = products.order_by('price')
+                # 높은 가격순
+                highToLow = products.order_by('-price')
+                # 신상품순
+                new = products.order_by('created_date')
+                # 평균 별점순
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                
+                if sort_by_options == "lowToHigh":
+                    products = lowToHigh
+                elif sort_by_options == "highToLow":
+                    products = highToLow
+                elif sort_by_options == "new":
+                    products = new
+                else:
+                    products = avg_review
+            
+            # 옵션 여부 불러와야함 
+         
+            my_dict=[]
+            id = []
+            variation_category = []
+            options_key_value = []
+                
+            for product in products.values('id'):
+                id.append(product['id'])
+            for i in id:    
+                product_test = Product.objects.get(id=i)  
+                variations = product_test.variation_set.all()
+                for variation in variations:
+                    if variation.variation_category not in variation_category:
+                        variation_category.append(variation.variation_category)
+                    
+                # print(variation_category) variation_category 중복없이 뽑아옴
+                
+
+                for variation_key in variation_category:
+                    items = product_test.variation_set.filter(variation_category=variation_key)
+
+                    options_key_value.append(list(items.values('variation_category','variation_value')))
+
+        # 카테고리 옵션은 존재하지 않지만 url 은 여전히 test 일 때
+        elif 'test' in previous_url and len(value_options) == 0 and request.session.has_key('category_name'):
+
+            
+        # 기존 카테고리 목록 유지해야되는 경우
+        
+            # 이전에 만들어 놓았던 세션에서 카테고리 정보 갖고오기
+            category_name = request.session.get("category_name")
+            # 뽑아낸 카테고리 정보로 상품 필터링
+            products = Product.objects.all().filter(is_available=True, category__slug = category_name)
+
+            # 낮은 가격순
+            lowToHigh = products.order_by('price')
+            # 높은 가격순
+            highToLow = products.order_by('-price')
+            # 신상품순
+            new = products.order_by('created_date')
+            # 평균 별점순
+            avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            
+            if sort_by_options == "lowToHigh":
+                products = lowToHigh
+            elif sort_by_options == "highToLow":
+                products = highToLow
+            elif sort_by_options == "new":
+                products = new
+            else:
+                products = avg_review
+         
+            id = []
+            variation_category = []
+            options_key_value = []        
+            
+            for product in products.values('id'):
+                id.append(product['id'])
+            for i in id:    
+                product_test = Product.objects.get(id=i)  
+                variations = product_test.variation_set.all()
+                for variation in variations:
+                    if variation.variation_category not in variation_category:
+                        variation_category.append(variation.variation_category)
+                    
+
+                for variation_key in variation_category:
+                    items = product_test.variation_set.filter(variation_category=variation_key)
+
+                    options_key_value.append(list(items.values('variation_category','variation_value')))
+            
+        # 카테고리가 없으면
         else:
+
+            
             products = Product.objects.all().filter(is_available=True)
             
             # 낮은 가격순
@@ -149,13 +364,7 @@ def test(request):
                 products = new
             else:
                 products = avg_review
-            
-            
-            paginator = Paginator(products,9)
-            page = request.GET.get('page')
-            paged_products = paginator.get_page(page)
-            product_count = products.count()
-
+         
             id = []
             variation_category = []
             options_key_value = []        
@@ -168,9 +377,12 @@ def test(request):
                 for variation in variations:
                     if variation.variation_category not in variation_category:
                         variation_category.append(variation.variation_category)
-                    
-
-        
+                
+                
+        paginator = Paginator(products,9)
+        page = request.GET.get('page')
+        paged_products = paginator.get_page(page)
+        product_count = products.count()
 
         colors = set()
         sizes = set()
@@ -198,11 +410,12 @@ def test(request):
             'products': paged_products,
             'product_count': product_count,
             'my_dict':my_dict,
-            # 'color':color,
-            # 'size':size,
+
 
 
         }
+        
+       
         
         return render(request, 'store/test.html', context)
             
