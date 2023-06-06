@@ -131,24 +131,81 @@ def test(request):
             
         else:
             products = Product.objects.all().filter(is_available=True)
-            print(f'products : {products}')
+            
             # 낮은 가격순
             lowToHigh = products.order_by('price')
-            print(f'lowtoHigh : {lowToHigh}')
-            
             # 높은 가격순
             highToLow = products.order_by('-price')
-            print(f'highToLow : {highToLow}')
-            
             # 신상품순
             new = products.order_by('created_date')
-            print(f'highToLow : {new}')
-        
             # 평균 별점순
             avg_review = Product.objects.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
-            print(f'highToLow : {avg_review}')
+            
+            if sort_by_options == "lowToHigh":
+                products = lowToHigh
+            elif sort_by_options == "highToLow":
+                products = highToLow
+            elif sort_by_options == "new":
+                products = new
+            else:
+                products = avg_review
+            
+            
+            paginator = Paginator(products,9)
+            page = request.GET.get('page')
+            paged_products = paginator.get_page(page)
+            product_count = products.count()
+
+            id = []
+            variation_category = []
+            options_key_value = []        
+            
+            for product in products.values('id'):
+                id.append(product['id'])
+            for i in id:    
+                product_test = Product.objects.get(id=i)  
+                variations = product_test.variation_set.all()
+                for variation in variations:
+                    if variation.variation_category not in variation_category:
+                        variation_category.append(variation.variation_category)
+                    
+
         
-        return render(request,'store/test.html' )
+
+        colors = set()
+        sizes = set()
+        
+        for item in options_key_value:
+            for variation in item:
+                if variation['variation_category'] == 'color':
+                    colors.add(variation['variation_value'])
+                elif variation['variation_category'] == 'size':
+                    sizes.add(variation['variation_value'])
+
+        # print("Colors:", colors)
+        # print("Sizes:", sizes)
+        
+        option_colors = sorted(list(colors))
+        option_sizes = sorted(list(sizes))
+        
+        my_dict = {
+            "colors":option_colors,
+            "sizes":option_sizes
+        }
+
+        
+        context = {
+            'products': paged_products,
+            'product_count': product_count,
+            'my_dict':my_dict,
+            # 'color':color,
+            # 'size':size,
+
+
+        }
+        
+        return render(request, 'store/test.html', context)
+            
 
 
 def product_detail(request, category_slug, product_slug):
