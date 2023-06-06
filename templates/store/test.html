@@ -52,8 +52,8 @@
 
             <!-- filter-group .// -->
 
-            
-
+            <form method="POST" action="{% url 'test' %}">
+            {% csrf_token %}
             {% for key, values in my_dict.items %}
             <article class="filter-group">
                 
@@ -69,9 +69,9 @@
 
                   {% for value in values  %}
                   <label class="checkbox-btn">
-                    <input type="checkbox" id="{{ key }}_{{ forloop.counter|add:1 }}">
-                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter|add:1 }}')">
-                      {{ value }}
+                    <input type="checkbox" id="{{ key }}_{{ forloop.counter|add:1 }}" name="key" value="{{ value }}" >
+                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter|add:1 }}')"  >
+                        {{ value|default:"Please choose one of categories first" }}
                     </span>
                   </label>
                   {% endfor %}
@@ -103,7 +103,7 @@
 
                     <div class="form-group text-right col-md-12">
                       
-                      <select class="form-control" id="sort-by-select">
+                      <select class="form-control" id="sort-by-select" name='sort_by'>
                         <option value="lowToHigh">Price: Low to High</option>
                         <option value="highToLow">Price: High to Low</option>
                         <option value="avg_review">Avg. Customer Review</option>
@@ -113,10 +113,12 @@
                   </div>
                   <!-- form-row.// -->
                   <button class="btn btn-block btn-primary" onclick="applyFilters()">Apply</button>
+                
                 </div>
                 <!-- card-body.// -->
               </div>
             </article>
+        </form>
             <!-- filter-group .// -->
 
           </div>
@@ -151,6 +153,15 @@
                     <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
                     <div class="price-wrap mt-2">
                       <span class="price">₩ {{ product.price|intcomma }}</span>
+                    </div>
+                    <div class="rating-star">
+                        <span>
+                            <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            </span>
                     </div>
                     <!-- price-wrap.// -->
                   </div>

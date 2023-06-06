@@ -11,6 +11,7 @@ urlpatterns = [
     path('submit_review/<int:product_id>/', views.submit_review, name='submit_review'),
     path('update_results/', views.update_results, name='update_results'),
     path('second_update_results/', views.second_update_results, name='second_update_results'),
+    
     path('test/',views.test, name='test'),
     
 ]

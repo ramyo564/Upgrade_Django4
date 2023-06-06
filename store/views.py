@@ -11,7 +11,7 @@ from orders.models import OrderProduct
 import json
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
+from django.db.models import Avg, Count
 
 # Create your views here.
 def store(request, category_slug=None):
@@ -117,7 +117,38 @@ def store(request, category_slug=None):
     return render(request, 'store/test.html', context)
 
 def test(request):
-    return render(request,'store/test.html' )
+    if request.method == 'POST':
+        sort_by_options = request.POST.get('sort_by')
+        value_options = request.POST.getlist('key')
+        previous_url = request.META.get('HTTP_REFERER', '')  # URL에 카테고리가 존재하는지 확인
+        
+        print(f'sort_by_options : {sort_by_options}')
+        print(f'value_options : {value_options}')
+                
+        # 주소창에 카테고리가 있는지 없는지
+        if 'category' in previous_url:
+            print('yes')
+            
+        else:
+            products = Product.objects.all().filter(is_available=True)
+            print(f'products : {products}')
+            # 낮은 가격순
+            lowToHigh = products.order_by('price')
+            print(f'lowtoHigh : {lowToHigh}')
+            
+            # 높은 가격순
+            highToLow = products.order_by('-price')
+            print(f'highToLow : {highToLow}')
+            
+            # 신상품순
+            new = products.order_by('created_date')
+            print(f'highToLow : {new}')
+        
+            # 평균 별점순
+            avg_review = Product.objects.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            print(f'highToLow : {avg_review}')
+        
+        return render(request,'store/test.html' )
 
 
 def product_detail(request, category_slug, product_slug):
