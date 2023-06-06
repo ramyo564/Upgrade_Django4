@@ -10,9 +10,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('submit_review/<int:product_id>/', views.submit_review, name='submit_review'),
     path('update_results/', views.update_results, name='update_results'),
-    path('second_update_results/', views.second_update_results, name='second_update_results'),
-    
-    path('test/',views.test, name='test'),
-    path('test/category/<str:category_slug>/', views.test, name='test_products_by_category'),
+
+
     
 ]
