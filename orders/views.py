@@ -64,8 +64,6 @@ def kakao_pay(request):
         res = requests.post(URL, headers=headers, params=data)
 
         request.session["tid"] = res.json()["tid"]
-        request.session["test_test"] = "test_test"
-        print(request.session["test_test"])
         next_url = res.json()['next_redirect_pc_url']
         
         return redirect(next_url)
@@ -78,8 +76,7 @@ def kakao_pay_approval(request):
         "Authorization": "KakaoAK " + KAKAO_PAY,
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",    
     }
-    print(request.session["test_test"])
-    print(request.session.get('tid'))
+
     data = {
         'cid': 'TC0ONETIME',  # test code
         "tid": request.session['tid'],
