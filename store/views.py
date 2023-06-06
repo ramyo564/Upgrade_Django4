@@ -129,6 +129,7 @@ def store(request, category_slug=None):
 
 def update_results(request):
     if request.method == 'POST':
+        
         sort_by_options = request.POST.get('sort_by')
         value_options = request.POST.getlist('key')
         previous_url = request.META.get('HTTP_REFERER', '')  # URL에 카테고리가 존재하는지 확인
@@ -139,7 +140,7 @@ def update_results(request):
                 
         # 주소창에 카테고리 존재
         if 'category' in previous_url:
-
+            print(1)
             # url 에서 슬러그 뽑아내기
             category_name_url = previous_url.split('/')
             category_name = category_name_url[-2]
@@ -217,8 +218,8 @@ def update_results(request):
                     options_key_value.append(list(items.values('variation_category','variation_value')))
         
         # 옵션 선택한 상태에서 한 번 더 선택할 때 -> 주소창은 test 옵션 존재할 때      
-        elif 'test' in previous_url and len(value_options) != 0:
- 
+        elif 'update_results' in previous_url and len(value_options) != 0:
+            print(2)
 
             # 이전에 만들어 놓았던 세션에서 카테고리 정보 갖고오기
             category_name = request.session.get("category_name")
@@ -226,9 +227,35 @@ def update_results(request):
             # 뽑아낸 카테고리 정보로 상품 필터링
             products = Product.objects.all().filter(is_available=True, category__slug = category_name)
 
-            # 옵션을 선택했을때
-            if len(value_options) > 0:
+            # 옵션을 선택했을때 (1개)
+            if len(value_options) == 1:
                 products = products.filter(variation__variation_value__in = value_options)
+                
+                # 낮은 가격순
+                lowToHigh = products.order_by('price')
+                # 높은 가격순
+                highToLow = products.order_by('-price')
+                # 신상품순
+                new = products.order_by('created_date')
+                # 평균 별점순
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                
+                if sort_by_options == "lowToHigh":
+                    products = lowToHigh
+                elif sort_by_options == "highToLow":
+                    products = highToLow
+                elif sort_by_options == "new":
+                    products = new
+                else:
+                    products = avg_review
+
+            # 옵션을 선택했을때 (2개 이상)
+            elif len(value_options) > 1:
+                print("중복검사")
+                for value in value_options:
+                    
+                    products = products.filter(variation__variation_value = value)
+                    print(products)
                 
                 # 낮은 가격순
                 lowToHigh = products.order_by('price')
@@ -294,8 +321,8 @@ def update_results(request):
                     options_key_value.append(list(items.values('variation_category','variation_value')))
 
         # 카테고리 옵션은 존재하지 않지만 url 은 여전히 test 일 때
-        elif 'test' in previous_url and len(value_options) == 0 and request.session.has_key('category_name'):
-
+        elif 'update_results' in previous_url and len(value_options) == 0 and request.session.has_key('category_name'):
+            print(3)
             
         # 기존 카테고리 목록 유지해야되는 경우
         
@@ -343,7 +370,7 @@ def update_results(request):
             
         # 카테고리가 없으면
         else:
-
+            print(4)
             
             products = Product.objects.all().filter(is_available=True)
             
