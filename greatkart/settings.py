@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,10 +43,10 @@ SECRET_KEY = get_secret("DJANGO_SECRET_KEY")
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',default=True ,cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -168,16 +169,16 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = MY_EMAIL
-EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = 'True'
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
 
 # PAYPAL
-SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
-PAY_PAL = get_secret("PAY_PAL")
+SECURE_CROSS_ORIGIN_OPENER_POLICY=config('SECURE_CROSS_ORIGIN_OPENER_POLICY')
+PAY_PAL = config('PAY_PAL')
 
 # KAKAO_PAY
-KAKAO_PAY = get_secret("KAKAO_PAY")
+KAKAO_PAY = config('KAKAO_PAY')
