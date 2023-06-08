@@ -20,43 +20,39 @@ from django.conf import settings
 
 
 # Create your views here.
-KAKAO_SIGN_UP = settings.KAKAO_SIGN_UP
-KAKAO_SIGN_UP_CLIENT_ID = settings.KAKAO_SIGN_UP_CLIENT_ID
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+
+from .forms import RegistrationForm
+from .models import Account, UserProfile
 
 
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone_number = form.cleaned_data['phone_number']
+            user = form.save(commit=False)
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            username = email.split("@")[0]
-            user = Account.objects.create_user(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                username=username,
-                password=password
-                )
-            user.phone_number = phone_number
+            user.set_password(password)
+            user.username = email.split("@")[0]
             user.save()
             
-            # Create a user profile
-            profile = UserProfile()
-            profile.user_id = user.id
-            profile.profile_picture = 'default/avatar.webp'
-            profile.save()
-
+            # 사용자 프로필 생성
+            profile = UserProfile.objects.create(user=user, profile_picture='default/avatar.webp')
             
-            # USER ACTIVATION
+            # 사용자 활성화
             current_site = get_current_site(request)
             mail_subject = 'Please activate your account'
             message = render_to_string('accounts/account_verification_email.html', {
-                "user" : user,
-                "domain" : current_site,
+                "user": user,
+                "domain": current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
@@ -65,15 +61,12 @@ def register(request):
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
             
-            # messages.success(request,
-            #                  'We have sent you a verification email [practicetestsmtp@gmail.com]. Please verify it.')
             return redirect('/accounts/login/?command=verification&email='+email)
-        
-    else:   
-            form = RegistrationForm()        
+    else:
+        form = RegistrationForm()
         
     context = {
-        'form' : form,
+        'form': form,
     }
     return render(request, 'accounts/register.html', context)
 
