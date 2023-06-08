@@ -1,21 +1,9 @@
-{% extends 'base.html' %}
+
 {% load static %}
 {% load humanize %}
-{% block content %}
-  <!-- ========================= SECTION PAGETOP ========================= -->
-  <section class="section-pagetop bg">
-    <div class="container">
-      {% if 'search' in request.path  %}
-        <h2 class="title-page">Search Result</h2>
-      {% else %}
-        <h2 class="title-page">Our Store</h2>
-      {% endif %}
-      
 
-    </div>
-    <!-- container // -->
-  </section>
-  <!-- ========================= SECTION INTRO END// ========================= -->
+{% block content %}
+
   <!-- ========================= SECTION CONTENT ========================= -->
   <section class="section-content padding-y">
     <div class="container">
@@ -52,34 +40,29 @@
 
             <!-- filter-group .// -->
 
-            <form method="POST" action="{% url 'update_results' %}">
+            
 
-            {% csrf_token %}
             {% for key, values in my_dict.items %}
             <article class="filter-group">
-                
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_{{forloop.counter|add:1 }}" aria-expanded="true" class="">
+                <a href="#" data-toggle="collapse" data-target="#collapse_{{forloop.counter}}" aria-expanded="true" class="">
                   <i class="icon-control fa fa-chevron-down"></i>
-                  
                   <h6 class="title">{{ key }}</h6>
                 </a>
               </header>
-              <div class="filter-content collapse show" id="collapse_{{forloop.counter|add:1}}" style="">
+              <div class="filter-content collapse show" id="collapse_{{forloop.counter}}" style="">
                 <div class="card-body">
-
                   {% for value in values  %}
                   <label class="checkbox-btn">
-                    <input type="checkbox" id="{{ key }}_{{ forloop.counter|add:1 }}" name="key" value="{{ value }}" >
-                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter|add:1 }}')"  >
-                        {{ value|default:"Please choose one of categories first" }}
+                    <input type="checkbox" id="{{ key }}_{{ forloop.counter }}">
+                    <span class="btn btn-light" onclick="toggleSelection('{{ key }}_{{ forloop.counter }}')">
+                      {{ value }}
                     </span>
                   </label>
                   {% endfor %}
                 </div>
                 <!-- card-body.// -->
               </div>
-              
             </article>
             {% endfor %}
 
@@ -91,21 +74,20 @@
 
             <article class="filter-group">
               <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_0" aria-expanded="true" class="">
+                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
                   <i class="icon-control fa fa-chevron-down"></i>
                   <h6 class="title">Sort by
                   </h6>
                 </a>
               </header>
-              <div class="filter-content collapse show" id="collapse_0" style="">
+              <div class="filter-content collapse show" id="collapse_3" style="">
                 <div class="card-body">
 
                   <div class="form-row">
 
                     <div class="form-group text-right col-md-12">
                       
-                      <select class="form-control" id="sort-by-select" name='sort_by'>
-                        <option value="">SELECT</option>
+                      <select class="form-control" id="sort-by-select">
                         <option value="lowToHigh">Price: Low to High</option>
                         <option value="highToLow">Price: High to Low</option>
                         <option value="avg_review">Avg. Customer Review</option>
@@ -115,12 +97,10 @@
                   </div>
                   <!-- form-row.// -->
                   <button class="btn btn-block btn-primary" onclick="applyFilters()">Apply</button>
-                
                 </div>
                 <!-- card-body.// -->
               </div>
             </article>
-        </form>
             <!-- filter-group .// -->
 
           </div>
@@ -156,26 +136,10 @@
                     <div class="price-wrap mt-2">
                       <span class="price">₩ {{ product.price|intcomma }}</span>
                     </div>
-                    <div class="rating-star">
-                        <span>
-                            <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-                            <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-                            <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-                            <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-                            <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                            </span>
-                    </div>
                     <!-- price-wrap.// -->
                   </div>
-                  {% if product.stock <= 0 %}
-                  <h5 class="text-danger">Out of Stock</h5>
-
-                  {% else %}
-  
                   <a href="{% url 'add_cart' product.id %}" class="btn btn-block btn-primary">Added to cart
                   </a>
-                  
-                  {% endif %}
                 </figcaption>
               </figure>
             </div>
@@ -225,5 +189,60 @@
     <!-- container .// -->
   </section>
   <!-- ========================= SECTION CONTENT END// ========================= -->
-  {% endblock %}
+
+  <!-- selected options effect -->
+  <script>
+    function toggleSelection(checkboxId) {
+      var checkbox = document.getElementById(checkboxId);
+      var span = checkbox.nextElementSibling;
+      span.classList.toggle("selected");
+    }
+  
+    function applyFilters(event) {
+      event.preventDefault(); // 기본 동작 차단
+  
+      var selectedValues = [];
+      var selectedElements = document.getElementsByClassName("selected");
+      for (var i = 0; i < selectedElements.length; i++) {
+        selectedValues.push(selectedElements[i].textContent.trim());
+      }
+  
+      var sortBySelect = document.getElementById("sort-by-select");
+      var selectedSortOption = sortBySelect.value;
+  
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "{% url 'second_update_results' %}");
+      xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+  
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+          // Handle response from the server
+        }
+      };
+  
+      var data = new FormData();
+      data.append("selectedValues", JSON.stringify(selectedValues));
+      data.append("selectedSortOption", selectedSortOption);
+  
+      xhr.send(data);
+  
+    }
+  
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+{% endblock %}
 

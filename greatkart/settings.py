@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'carts',
     "phonenumber_field",
     "orders",
+    "admin_honeypot",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'greatkart.urls'
+
+
+#Django Session Timeout Code
+SESSION_COOKIE_AGE = 3600 # 60 min
+SESSION_SAVE_EVERY_REQUEST = True
+
+# admin_honeypot.LoginAttempt
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 TEMPLATES = [
     {
@@ -182,3 +191,7 @@ PAY_PAL = config('PAY_PAL')
 
 # KAKAO_PAY
 KAKAO_PAY = config('KAKAO_PAY')
+
+# KAKAO_LOGIN
+KAKAO_SIGN_UP = config('KAKAO_SIGN_UP')
+KAKAO_SIGN_UP_CLIENT_ID = config('KAKAO_SIGN_UP_CLIENT_ID')

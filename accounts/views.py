@@ -16,8 +16,13 @@ from carts.views import _cart_id
 from carts.models import Cart, CartItem
 import requests
 from orders.models import Order, OrderProduct
+from django.conf import settings
+
 
 # Create your views here.
+KAKAO_SIGN_UP = settings.KAKAO_SIGN_UP
+KAKAO_SIGN_UP_CLIENT_ID = settings.KAKAO_SIGN_UP_CLIENT_ID
+
 
 def register(request):
     if request.method == 'POST':

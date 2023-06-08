@@ -128,6 +128,9 @@ def store(request, category_slug=None):
     return render(request, 'store/store.html', context)
 
 def update_results(request):
+    global products
+    global options_key_value
+
     if request.method == 'POST':
         
         sort_by_options = request.POST.get('sort_by')
@@ -406,45 +409,46 @@ def update_results(request):
                         variation_category.append(variation.variation_category)
                 
                 
-        paginator = Paginator(products,9)
-        page = request.GET.get('page')
-        paged_products = paginator.get_page(page)
-        product_count = products.count()
+    paginator = Paginator(products,9)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = products.count()
 
-        colors = set()
-        sizes = set()
-        
-        for item in options_key_value:
-            for variation in item:
-                if variation['variation_category'] == 'color':
-                    colors.add(variation['variation_value'])
-                elif variation['variation_category'] == 'size':
-                    sizes.add(variation['variation_value'])
+    colors = set()
+    sizes = set()
+    
+    for item in options_key_value:
+        for variation in item:
+            if variation['variation_category'] == 'color':
+                colors.add(variation['variation_value'])
+            elif variation['variation_category'] == 'size':
+                sizes.add(variation['variation_value'])
 
-        # print("Colors:", colors)
-        # print("Sizes:", sizes)
-        
-        option_colors = sorted(list(colors))
-        option_sizes = sorted(list(sizes))
-        
-        my_dict = {
-            "colors":option_colors,
-            "sizes":option_sizes
-        }
+    # print("Colors:", colors)
+    # print("Sizes:", sizes)
+    
+    option_colors = sorted(list(colors))
+    option_sizes = sorted(list(sizes))
+    
+    my_dict = {
+        "colors":option_colors,
+        "sizes":option_sizes
+    }
 
-        
-        context = {
-            'products': paged_products,
-            'product_count': product_count,
-            'my_dict':my_dict,
+    
+    context = {
+        'products': paged_products,
+        'product_count': product_count,
+        'my_dict':my_dict,
 
 
-
-        }
+    }
+    
+    
+    return render(request, 'store/filtered_store.html', context)
+    
+ 
         
-       
-        
-        return render(request, 'store/store.html', context)
             
 
 def product_detail(request, category_slug, product_slug):
