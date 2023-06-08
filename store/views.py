@@ -445,7 +445,7 @@ def update_results(request):
     }
     
     
-    return render(request, 'store/filtered_store.html', context)
+    return render(request, 'store/store.html', context)
     
  
         
