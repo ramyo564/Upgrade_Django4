@@ -127,6 +127,9 @@ def store(request, category_slug=None):
     
     return render(request, 'store/store.html', context)
 
+
+
+
 def update_results(request):
     global products
     global options_key_value
