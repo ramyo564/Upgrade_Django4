@@ -25,13 +25,20 @@
 
 	
 <div class="row">
+
+
+	
 	{% for product in products %}
 	<div class="col-xl-3 col-lg-3 col-md-4 col-6">
 		<div class="card card-product-grid">
 			<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{product.images.url}}"> </a>
 			<figcaption class="info-wrap">
 				<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+				{% if product.stock <= 0 %}
+				<h5 class="text-danger">Out of Stock</h5>
+				{% else %}
 				<div class="price mt-1">₩ {{ product.price|intcomma }}</div> <!-- price-wrap.// -->
+				{% endif %}
 				<div class="rating-star">
 					<span>
 						<i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -47,6 +54,7 @@
 		</div>
 	</div> 
 	{% endfor %}
+	
 </div> <!-- row.// -->
 
 </div><!-- container // -->
