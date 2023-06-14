@@ -154,7 +154,7 @@ def update_results(request):
             request.session["category_name"] = category_name
             
             # 뽑아낸 slug 로 상품 필터링
-            products = Product.objects.all().filter(is_available=True, category__slug = category_name)
+            products = Product.objects.all().filter(is_available=True, category__slug = category_name).distinct()
 
             # 옵션을 선택했을때
             if len(value_options) > 0:
