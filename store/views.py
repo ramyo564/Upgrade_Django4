@@ -11,7 +11,7 @@ from orders.models import OrderProduct
 import json
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Subquery, OuterRef
 from django.utils.text import slugify
 
 # Create your views here.
@@ -387,7 +387,10 @@ def update_results(request):
             # 신상품순
             new = products.order_by('created_date')
             # 평균 별점순
-            avg_review = Product.objects.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            # avg_review = Product.objects.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            subquery = ReviewRating.objects.filter(product=OuterRef('pk'), status=True).values('product').annotate(
+    average=Avg('rating')).values('average')[:1]
+            avg_review = Product.objects.annotate(avg_review=Subquery(subquery)).order_by('-avg_review')
             
             if sort_by_options == "lowToHigh":
                 products = lowToHigh
@@ -395,7 +398,8 @@ def update_results(request):
                 products = highToLow
             elif sort_by_options == "avg_review":
                 print('test')
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('avg_review')
+                # avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('avg_review')
+                products = avg_review
             else:
                 products = avg_review
          
