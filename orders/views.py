@@ -256,9 +256,10 @@ def place_order(request, total=0, quantity=0):
             data.email = form.cleaned_data['email']
             data.address_line_1 = form.cleaned_data['address_line_1']
             data.address_line_2 = form.cleaned_data['address_line_2']
-            data.country = form.cleaned_data['country']
-            data.state = form.cleaned_data['state']
-            data.city = form.cleaned_data['city']
+            data.address_detail = form.cleaned_data['address_detail']
+            # data.country = form.cleaned_data['country']
+            # data.state = form.cleaned_data['state']
+            # data.city = form.cleaned_data['city']
             data.post_code = form.cleaned_data['post_code']
             data.order_note = form.cleaned_data['order_note']
             data.order_total = grand_total

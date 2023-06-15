@@ -16,5 +16,6 @@ class OrderForm(forms.ModelForm):
             'state',
             'city',
             'order_note',
-            'post_code'
+            'post_code',
+            'address_detail'
             ]
