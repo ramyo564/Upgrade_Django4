@@ -12,9 +12,9 @@ class OrderForm(forms.ModelForm):
             'email',
             'address_line_1',
             'address_line_2',
-            'country',
-            'state',
-            'city',
+            # 'country',
+            # 'state',
+            # 'city',
             'order_note',
             'post_code',
             'address_detail'
