@@ -11,7 +11,7 @@ from orders.models import OrderProduct
 import json
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.db.models import Avg, Count, Subquery, OuterRef
+from django.db.models import Avg, Value, Case, When, FloatField
 from django.utils.text import slugify
 
 # Create your views here.
@@ -167,7 +167,17 @@ def update_results(request):
                 # 신상품순
                 new = products.order_by('created_date')
                 # 평균 별점순
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+                avg_review = products.annotate(
+                    avg_review=Avg('reviewrating__rating')
+                ).annotate(
+                    avg_review_with_default=Case(
+                        When(avg_review__isnull=True, then=Value(default_rating)),
+                        default='avg_review',
+                        output_field=FloatField()
+                    )
+                ).order_by('-avg_review_with_default')
                 
                 if sort_by_options == "lowToHigh":
                     products = lowToHigh
@@ -188,8 +198,17 @@ def update_results(request):
                 # 신상품순
                 new = products.order_by('created_date')
                 # 평균 별점순
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
-                print('3')
+                default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+                avg_review = products.annotate(
+                    avg_review=Avg('reviewrating__rating')
+                ).annotate(
+                    avg_review_with_default=Case(
+                        When(avg_review__isnull=True, then=Value(default_rating)),
+                        default='avg_review',
+                        output_field=FloatField()
+                    )
+                ).order_by('-avg_review_with_default')
                 if sort_by_options == "lowToHigh":
                     products = lowToHigh
                 elif sort_by_options == "highToLow":
@@ -244,7 +263,17 @@ def update_results(request):
                 # 신상품순
                 new = products.order_by('created_date')
                 # 평균 별점순
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+                avg_review = products.annotate(
+                    avg_review=Avg('reviewrating__rating')
+                ).annotate(
+                    avg_review_with_default=Case(
+                        When(avg_review__isnull=True, then=Value(default_rating)),
+                        default='avg_review',
+                        output_field=FloatField()
+                    )
+                ).order_by('-avg_review_with_default')
                 
                 if sort_by_options == "lowToHigh":
                     products = lowToHigh
@@ -270,7 +299,17 @@ def update_results(request):
                 # 신상품순
                 new = products.order_by('created_date')
                 # 평균 별점순
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+                avg_review = products.annotate(
+                    avg_review=Avg('reviewrating__rating')
+                ).annotate(
+                    avg_review_with_default=Case(
+                        When(avg_review__isnull=True, then=Value(default_rating)),
+                        default='avg_review',
+                        output_field=FloatField()
+                    )
+                ).order_by('-avg_review_with_default')
                 
                 if sort_by_options == "lowToHigh":
                     products = lowToHigh
@@ -291,7 +330,17 @@ def update_results(request):
                 # 신상품순
                 new = products.order_by('created_date')
                 # 평균 별점순
-                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+                default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+                avg_review = products.annotate(
+                    avg_review=Avg('reviewrating__rating')
+                ).annotate(
+                    avg_review_with_default=Case(
+                        When(avg_review__isnull=True, then=Value(default_rating)),
+                        default='avg_review',
+                        output_field=FloatField()
+                    )
+                ).order_by('-avg_review_with_default')
                 
                 if sort_by_options == "lowToHigh":
                     products = lowToHigh
@@ -344,7 +393,17 @@ def update_results(request):
             # 신상품순
             new = products.order_by('created_date')
             # 평균 별점순
-            avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+            avg_review = products.annotate(
+                avg_review=Avg('reviewrating__rating')
+            ).annotate(
+                avg_review_with_default=Case(
+                    When(avg_review__isnull=True, then=Value(default_rating)),
+                    default='avg_review',
+                    output_field=FloatField()
+                )
+            ).order_by('-avg_review_with_default')
             
             if sort_by_options == "lowToHigh":
                 products = lowToHigh
@@ -387,7 +446,18 @@ def update_results(request):
             # 신상품순
             new = products.order_by('created_date')
             # 평균 별점순
-            avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('-avg_review')
+            default_rating = 0.0  # 기본값으로 사용할 평점 (실수 형식)
+
+            avg_review = products.annotate(
+                avg_review=Avg('reviewrating__rating')
+            ).annotate(
+                avg_review_with_default=Case(
+                    When(avg_review__isnull=True, then=Value(default_rating)),
+                    default='avg_review',
+                    output_field=FloatField()
+                )
+            ).order_by('-avg_review_with_default')
+
             
             if sort_by_options == "lowToHigh":
                 products = lowToHigh
