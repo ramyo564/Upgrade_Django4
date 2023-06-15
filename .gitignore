@@ -3,7 +3,7 @@
 
 # SECRET_KEY
 /secrets.json
-
+/readme.md
 ### Django ###
 *.log
 *.pot
