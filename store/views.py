@@ -393,8 +393,9 @@ def update_results(request):
                 products = lowToHigh
             elif sort_by_options == "highToLow":
                 products = highToLow
-            elif sort_by_options == "new":
-                products = new
+            elif sort_by_options == "avg_review":
+                print('test')
+                avg_review = products.annotate(avg_review=Avg('reviewrating__rating')).order_by('avg_review')
             else:
                 products = avg_review
          
