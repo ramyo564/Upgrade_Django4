@@ -43,6 +43,8 @@ class Product(models.Model):
             count = int(reviews['count'])
         return count
     
+
+    
 class VariationManager(models.Manager):
     def colors(self):
         return super(VariationManager, self).filter(variation_category='color', is_active=True)
