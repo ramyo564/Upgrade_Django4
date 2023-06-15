@@ -1,5 +1,17 @@
 # Upgrade_Django4
 
+- [[#Review|Review]]
+	- [[#Review#비회원일 때 댓글을 달 수 없는 기능|비회원일 때 댓글을 달 수 없는 기능]]
+	- [[#Review#회원일 때 댓글을 달 수 있는 기능|회원일 때 댓글을 달 수 있는 기능]]
+	- [[#Review#평균 별점 반영 및 리뷰 갯수 카운팅|평균 별점 반영 및 리뷰 갯수 카운팅]]
+- [[#Search|Search]]
+- [[#Payment|Payment]]
+- [[#Pagenator|Pagenator]]
+- [[#Cart|Cart]]
+- [[#Sort by|Sort by]]
+- [[#User|User]]
+- [[#비밀번호 찾기|비밀번호 찾기]]
+
 
 ## Review
 
