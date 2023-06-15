@@ -15,7 +15,7 @@ from django.template.loader import render_to_string
 last_order_number = 0
 
 def kakao_pay(request):
-    BASE_URL = "http://127.0.0.1:8000"
+    BASE_URL = "https://yohanyohan.com"
     if request.method == 'POST':
 
         current_user = request.user
