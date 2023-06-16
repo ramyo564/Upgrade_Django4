@@ -35,6 +35,10 @@
 
 ### 페이지
 
+![](https://i.imgur.com/i1PEiZx.gif)
+
+![](https://i.imgur.com/MIfz0Jx.gif)
+
 ![](https://i.imgur.com/MlAW39u.gif)
 
 
@@ -87,6 +91,9 @@
 ![](https://i.imgur.com/qdiJxze.png)
 
 ### 페이지 구현
+
+
+![](https://i.imgur.com/P1lOt5T.gif)
 
 ![](https://i.imgur.com/s6p3mMl.gif)
 
