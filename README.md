@@ -30,10 +30,12 @@
 
 ### 비회원일 때 댓글을 달 수 없는 기능
 
-![](https://i.imgur.com/MlAW39u.gif)
-
 - 로그인이 되어있지 않은 경우 로그인 페이지가 나옵니다.
 - 로그인이 되어있는 상태이지만 물건을 구매한 적이 없다면 리뷰를 달 수 없습니다.
+
+### 페이지
+
+![](https://i.imgur.com/MlAW39u.gif)
 
 
 ### 회원일 때 댓글을 달 수 있는 기능
@@ -84,7 +86,7 @@
 
 ![](https://i.imgur.com/qdiJxze.png)
 
-     
+### 페이지 구현
 
 ![](https://i.imgur.com/s6p3mMl.gif)
 
