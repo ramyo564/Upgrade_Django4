@@ -1,11 +1,13 @@
 쇼핑몰 웹 페이지이며 아래와 같은 기능들을 구현했습니다.
 
 - [Review](#review)
+- [페이지](#%ED%8E%98%EC%9D%B4%EC%A7%80)
 - [Search](#search)
 - [Payment](#payment)
-- [Pagenator](#pagenator)
+- [Paginator](#paginator)
 - [Cart](#cart)
 - [Sort by](#sort-by)
+- [페이지 구현](#%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B5%AC%ED%98%84)
 - [User](#user)
 
 # About
@@ -71,7 +73,7 @@ https://i.imgur.com/i1PEiZx.gif
 ![](https://i.imgur.com/bubUb5w.gif)
 
 
-## Pagenator
+## Paginator 
 > 장고에서 제공하는 Paginator를 사용하여 페이지 단위를 구현했습니다.  
 
 ![](https://i.imgur.com/52uAjlm.gif)
