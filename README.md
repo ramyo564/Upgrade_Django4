@@ -1,3 +1,5 @@
+쇼핑몰 웹 페이지이며 아래와 같은 기능들을 구현했습니다.
+
 - [Review](#review)
 - [Search](#search)
 - [Payment](#payment)
@@ -8,7 +10,7 @@
 
 # About
 
-개발 기간 : 2023.05 ~ 2023.06
+개발 기간 : 2023.05 ~ 2023.06   
 개발 인원 : 1명 (개인 프로젝트)
 
 | 개발환경   | -                |
@@ -82,7 +84,9 @@
 ![](https://i.imgur.com/qdiJxze.png)
 
 
-![](https://i.imgur.com/iNv2JmY.gif)
+
+![](https://i.imgur.com/s6p3mMl.gif)
+
 
 
 ## User
