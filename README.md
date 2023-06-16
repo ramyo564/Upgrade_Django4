@@ -82,6 +82,9 @@ https://i.imgur.com/i1PEiZx.gif
 > 2. 세션을 활용하여 비로그인 상태에서 장바구니에 물건을 담았다가 로그인을 했을 때 중복된 상품이 있을 경우는 해당 상품의 개수가 늘어나고 그렇지 않은 경우에는 새로 장바구니에 추가되도록 구현했습니다.
 > 3. 주소 찾기는 DAUM API를 이용했습니다. 
 
+
+https://i.imgur.com/KnIAk86.gif
+
 ![](https://i.imgur.com/KnIAk86.gif)
 
 ## Sort by
