@@ -17,7 +17,7 @@ def counter(request):
     # return dict(cart_count=cart_count)
 
     cart_count = 0
-    if 'admin' in request.path:
+    if "admin" in request.path:
         return {}
     else:
         try:
