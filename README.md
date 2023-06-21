@@ -44,7 +44,8 @@
 
 ### 회원가입 및 본인인증
 
-![](https://github.com/ramyo564/Upgrade_Django4/blob/main/img_for_this_project/register.gif)
+![register](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/22cbe0ec-4c48-4646-86e9-1deb2a45b891)
+
 
 ### 비밀번호 찾기
 - 가입한 이메일 주소가 존재할 경우 해당 이메일이 전송됩니다.
