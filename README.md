@@ -1,18 +1,11 @@
-쇼핑몰 웹 페이지이며 아래와 같은 기능들을 구현했습니다.    
-👉 https://yohanyohan.com/
 
-- [Review](#review)
-- [Search](#search)
-- [Payment](#payment)
-- [Paginator](#paginator)
-- [Cart](#cart)
-- [Sort by](#sort-by)
-- [User](#user)
+# 매력없는 프로젝트 -> 쇼핑몰?
 
-# About
+- 예전에 마케터로 일할 때 자사 몰이 없어서 판매 채널 플랫폼에만 의존해야만 해서 아쉬운 적이 경험이 많았습니다. 그래서 저는 첫 프로젝트로 직접 쇼핑몰을 만들기로 했습니다.
+- 또한 회원가입 기능부터 CRUD 등 기본적인 기술들을 연습하기 할 수 있다고 생각했기 때문입니다.
+- 위와 같은 이유로 첫 개인 프로젝트로 쇼핑몰을 선택했습니다.
 
-개발 기간 : 2023.05 ~ 2023.06   
-개발 인원 : 1명 (개인 프로젝트)
+## 기술스택
 
 | 개발환경   | -                |
 | ---------- | ---------------- |
@@ -21,6 +14,55 @@
 | DB         | PostgreSQL - 15.3 |
 | API        |       카카오페이, PayPal, Daum 주소           |
 | Devops           |    AWS - EC2, S3, RDS, Route53, VPC, IAM, Beanstalk               |
+
+# About
+
+개발 기간 : 2023.05 ~ 2023.06   
+개발 인원 : 1명 (개인 프로젝트)
+사이트 바로가기 : 👉 https://yohanyohan.com/
+
+## 목차
+- [User](#user)
+	- 로그인 / 로그아웃
+	- 회원가입 
+		- 이메일 토큰 링크를 통한 본인인증
+	- 대시보드
+		- 프로필, 마이페이지, 주문조회
+- [Review](#review)
+- [Search](#search)
+- [Payment](#payment)
+- [Paginator](#paginator)
+- [Cart](#cart)
+- [Sort by](#sort-by)
+
+
+## User
+
+> 1. 장고의 기본 BaseUserManager, AbstractBaseUser 를 이용해서 회원가입 모델을 구현했습니다.
+> 2. 핸드폰 번호의 유효성 검사의 경우 `PhoneNumberField` 라이브러리를 사용해 구현했습니다.
+> 3. 회원가입을 할 때 가입한 이메일로 토큰을 보내고 해당 링크로 접속했을 때의 pk와 토큰이 일치할 경우에만 본인인증이 확인되어 계정이 활성화 되도록 구현했습니다.
+
+### 회원가입 및 본인인증
+
+<img src="/ramyo564/Upgrade_Django4/img_for_this_project/register.gif" alt="register">
+
+### 비밀번호 찾기
+- 가입한 이메일 주소가 존재할 경우 해당 이메일이 전송됩니다.
+- 회원가입과 같은 방식으로 본인인증이 진행되며 본인인증이 완료되면 새로운 비밀번호를 설정 할합니다.
+- 새로운 비밀번호로 로그인에 성공하면 계정이 다시 활성화됩니다.
+
+![](https://i.imgur.com/CTAytbI.gif)
+
+### 프로필 사진 및 비밀번호 변경
+
+- 회원가입 때 기본으로 생성된 프로필이 변경가능하며 비밀번호도 변경이 가능합니다.
+
+![](https://i.imgur.com/Pssv5z9.gif)
+
+### 주문번호 확인
+
+![](https://i.imgur.com/7tOYvOQ.gif)
+
 
 ## Review
 
@@ -99,30 +141,3 @@ https://i.imgur.com/s6p3mMl.gif
 ![https://i.imgur.com/s6p3mMl.gif](https://i.imgur.com/s6p3mMl.gif)
 
 
-
-## User
-
-> 1. 장고의 기본 BaseUserManager, AbstractBaseUser 를 이용해서 회원가입 모델을 구현했습니다.
-> 2. 핸드폰 번호의 경우 `PhoneNumberField` 라이브러리를 사용해 유효성을 구현했습니다.
-> 3. 회원가입을 할 때 사용한 이메일로 토큰을 보내고 해당 링크로 접속할 때의 pk와 토큰이 일치하도록 하여 본인인증이 될 경우에만 계정이 활성화 되도록 구현했습니다.
-
-### 회원가입 및 본인인증
-
-![](https://i.imgur.com/9sD4UjO.gif)
-
-### 비밀번호 찾기
-- 가입한 이메일 주소가 존재할 경우 해당 이메일이 전송됩니다.
-- 회원가입과 같은 방식으로 본인인증이 진행되며 본인인증이 완료되면 새로운 비밀번호를 설정 할합니다.
-- 새로운 비밀번호로 로그인에 성공하면 계정이 다시 활성화됩니다.
-
-![](https://i.imgur.com/CTAytbI.gif)
-
-### 프로필 사진 및 비밀번호 변경
-
-- 회원가입 때 기본으로 생성된 프로필이 변경가능하며 비밀번호도 변경이 가능합니다.
-
-![](https://i.imgur.com/Pssv5z9.gif)
-
-### 주문번호 확인
-
-![](https://i.imgur.com/7tOYvOQ.gif)
