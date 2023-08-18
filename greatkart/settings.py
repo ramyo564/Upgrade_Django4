@@ -39,13 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    # External
+    "drf_spectacular",
+    "admin_honeypot",
+    "phonenumber_field",
+
+    # Internal
     'category',
     'accounts',
     'store',
     'carts',
-    "phonenumber_field",
+
     "orders",
-    "admin_honeypot",
+
 ]
 
 MIDDLEWARE = [
@@ -60,6 +66,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'greatkart.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Django DRF Ecommerce",
+}
 
 # Django Session Timeout Code
 
