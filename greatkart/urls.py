@@ -10,10 +10,7 @@ from accounts import views_api as accounts_views_api
 
 router = DefaultRouter()
 router.register(r"account", accounts_views_api.AccountViewSet, basename='account')
-# router.register(
-#     r"check_verification/(?P<uidb64>[\w-]+)/(?P<token>[\w-]+)",
-#     accounts_views_api.EmailVerificationViewSet,
-# )
+
 
 urlpatterns = [
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
@@ -31,13 +28,5 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name="schema"),
     path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name="schema")),
 
-    # # DRF users token
-    # path("activate_api/<uidb64>/<token>/", accounts_views_api.activate_api, name="activate_api"),
 
-    # # DRF viewsets
-    # path('activate-api/<str:uidb64>/<str:token>/', accounts_views_api.AccountViewSet.as_view(
-    #     {'get': 'activate_api'}),
-    #      name='activate_api'),
-
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
