@@ -15,10 +15,6 @@ class AccountSerializer(serializers.ModelSerializer):
             "phone_number",
         )
 
-    def create(self, validated_data):
-        user = Account.objects.create_user(**validated_data)
-        return user
-
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = serializers.ModelSerializer
