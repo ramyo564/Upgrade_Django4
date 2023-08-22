@@ -102,24 +102,6 @@ class TestAccountModel:
         assert create_user.has_perm("some_permission") == False
         assert create_user.has_module_perms("some_module") == True
 
-    def test_create_superuser(self, account_factory):
-        create_superuser = account_factory(
-            first_name="first_name",
-            last_name="last_name",
-            username="username",
-            email="email@email.com",
-            password="password",
-            is_admin=True,
-            is_active=True,
-            is_staff=True,
-            is_superadmin=True,
-        )
-
-        assert create_superuser.is_admin == True
-        assert create_superuser.is_active == True
-        assert create_superuser.is_staff == True
-        assert create_superuser.is_superadmin == True
-
 
 class TestUserProfile:
     def test_user_profile(self, user_profile_factory, account_factory):

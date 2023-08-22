@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     "admin_honeypot",
     "phonenumber_field",
     "rest_framework",
-    'rest_framework.authtoken',  # 토큰 기반 인증을 위한 앱 추가
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 
     # Internal
     'category',
@@ -72,8 +74,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.TokenAuthentication',  # 토큰 기반 인증 활성화
-        'rest_framework.authentication.BasicAuthentication'
-        # 'rest_framework.authentication.SessionAuthentication',  # CSRF 토큰 전달을 위한 세션 인증
+        # 'rest_framework.authentication.BasicAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -197,4 +199,10 @@ KAKAO_PAY = config('KAKAO_PAY')
 KAKAO_SIGN_UP = config('KAKAO_SIGN_UP')
 KAKAO_SIGN_UP_CLIENT_ID = config('KAKAO_SIGN_UP_CLIENT_ID')
 
-AUTH_USER_MODEL = 'accounts.Account'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=20),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ("rest_framework_simplejwt.tokens.AccessToken", ),
+}

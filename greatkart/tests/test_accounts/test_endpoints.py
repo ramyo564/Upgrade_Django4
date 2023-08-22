@@ -1,21 +1,92 @@
-# import pytest
-# from django.test import TestCase
-# from accounts.models import Account
-# from ..factories import AccountFactory
-# pytestmark = pytest.mark.django_db
+import pytest
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from rest_framework import status
+
+pytestmark = pytest.mark.django_db
 
 
-# class TestAccountModel(TestCase):
-#     def test_create_user(self):
-#         account = AccountFactory()
-#         db_account = Account.objects.get(id=account.id)
+User = get_user_model()
 
-#         self.assertEqual(account.first_name, db_account.first_name)
-#         self.assertEqual(account.last_name, db_account.last_name)
-#         self.assertEqual(account.username, db_account.username)
-#         self.assertEqual(account.email, db_account.email)
-#         self.assertEqual(account.phone_number, db_account.phone_number)
-#         self.assertEqual(account.is_admin, db_account.is_admin)
-#         self.assertEqual(account.is_staff, db_account.is_staff)
-#         self.assertEqual(account.is_active, db_account.is_active)
-#         self.assertEqual(account.is_superadmin, db_account.is_superadmin)
+
+@pytest.fixture
+def create_user():
+    user_data = {
+        "first_name": "John",
+        "last_name": "Doe",
+        "username": "johndoe",
+        "email": "johndoe@example.com",
+        "password": "testpassword",
+    }
+    return User.objects.create_user(**user_data)
+
+
+class TestAccountEndpoints:
+
+    def test_user_registration(self, api_client):
+        user_data = {
+            "first_name": "John",
+            "last_name": "Doe",
+            "username": "johndoe",
+            "email": "johndoe@example.com",
+            "password": "testpassword",
+            "confirm_password": "testpassword",
+            "phone_number": "010-1234-5678",
+        }
+        response = api_client().post("/api/account/register/", user_data)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_login(self, create_user, api_client):
+
+        # Valid_email_verification
+        uid_encode = urlsafe_base64_encode(force_bytes(create_user.pk))
+        token = default_token_generator.make_token(create_user)
+        data = {
+            "uidb64": uid_encode,
+            "token": token,
+        }
+        response = api_client().post("/api/account/check_email_verification/", data)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data == {"message": "This account is activated."}
+
+        # User Login
+        login_data = {
+            "email": "johndoe@example.com",
+            "password": "testpassword",
+        }
+        response = api_client().post("/api/account/login/", login_data)
+        access_token = response.data['access_token']
+        api_client().credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["message"] == "User logged in successfully."
+
+    def test_logout(self, create_user, api_client):
+
+        # Valid_email_verification
+        uid_encode = urlsafe_base64_encode(force_bytes(create_user.pk))
+        token = default_token_generator.make_token(create_user)
+        data = {
+            "uidb64": uid_encode,
+            "token": token,
+        }
+        response = api_client().post("/api/account/check_email_verification/", data)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data == {"message": "This account is activated."}
+        # 로그인
+        login_data = {
+            "email": "johndoe@example.com",
+            "password": "testpassword",
+        }
+        response = api_client().post("/api/account/login/", login_data)
+        assert response.status_code == status.HTTP_200_OK
+        access_token = response.data['access_token']
+
+        # 로그아웃
+        headers = {'Authorization': f'Bearer {access_token}'}
+        response = api_client().get("/api/account/logout/", headers=headers)
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["message"] == "Logged out successfully."

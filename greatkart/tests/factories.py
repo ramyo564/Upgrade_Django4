@@ -1,9 +1,9 @@
 import factory
-from accounts.models import Account, UserProfile, MyAccountManager
+from accounts.models import Account, UserProfile
 from django.contrib.auth.hashers import make_password
 from phonenumber_field.phonenumber import PhoneNumber
 from faker import Faker
-import pytest
+
 
 fake = Faker()
 
@@ -15,7 +15,7 @@ class AccountFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     username = factory.Faker("user_name")
-    email = factory.Faker("email@email.com")
+    email = factory.Faker("email")
     password = make_password("password")
     phone_number = PhoneNumber.from_string("010-1234-5678", region="KR")
 
@@ -35,6 +35,3 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
     city = factory.Faker("city")
     state = factory.Faker("state_abbr")
     country = factory.Faker("country_code")
-
-
-
