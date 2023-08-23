@@ -1,36 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
+import requests
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+import logging
+from carts.models import Cart, CartItem
+from carts.views import _cart_id
+from orders.models import Order, OrderProduct
+
 from .forms import RegistrationForm, UserForm, UserProfileForm
 from .models import Account, UserProfile
-from django.contrib import messages, auth
-from django.contrib.auth.decorators import login_required
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMessage
-from django.http import HttpResponse
-
-
-from carts.views import _cart_id
-from carts.models import Cart, CartItem
-import requests
-from orders.models import Order, OrderProduct
-from django.conf import settings
-
 
 # Create your views here.
-
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
-from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.contrib.auth.tokens import default_token_generator
-
-from .forms import RegistrationForm
-from .models import Account, UserProfile
 
 
 def register(request):
@@ -45,7 +31,7 @@ def register(request):
             user.save()
 
             # 사용자 프로필 생성
-            profile = UserProfile.objects.create(
+            UserProfile.objects.create(
                 user=user, profile_picture="default/avatar.webp"
             )
 
@@ -118,9 +104,10 @@ def login(request):
                             for item in cart_item:
                                 item.user = user
                                 item.save()
-
-            except:
+            except Exception as e:
+                logging.error(f"An error occurred: {e}")
                 pass
+
             auth.login(request, user)
             messages.success(request, "You are new logged in.")
             url = request.META.get("HTTP_REFERER")
@@ -136,7 +123,8 @@ def login(request):
                     nextPage = params["next"]
                     return redirect(nextPage)
 
-            except:
+            except Exception as e:
+                print("An error occurred:", e)
                 return redirect("dashboard")
         else:
             messages.error(request, "Invalid login credentials")
@@ -153,11 +141,12 @@ def logout(request):
 
 
 def activate(reqeust, uidb64, token):
-    # return HttpResponse('ok')
+    print(f"viwes ->  request : {reqeust}, uidb64 : {uidb64}, token : {token}")
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
 
+        print(f"user : {user} , token : {default_token_generator.check_token(user, token)}")
     except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
         user = None
 
