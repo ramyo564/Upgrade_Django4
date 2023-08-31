@@ -21,6 +21,7 @@ from .serializers import (
     UserLoginSerializer,
     UserRegisterSerializer,
     ForgotPasswordSerializer,
+    ResetPasswordSerializer
 )
 
 User = get_user_model()
@@ -250,3 +251,43 @@ class AccountViewSet(viewsets.ViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="resetpassword_validate",
+        authentication_classes=[],
+        permission_classes=[AllowAny],
+        serializer_class=ResetPasswordSerializer,
+    )
+    def resetpassword_validate(self, request):
+        serializer = ResetPasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            uidb64 = serializer.validated_data.get("uidb64")
+            token = serializer.validated_data.get("token")
+            password = serializer.validated_data.get("password")
+            confirm_password = serializer.validated_data.get("confirm_password")
+
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = Account._default_manager.get(pk=uid)
+            except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
+                user = None
+
+            if user is not None and default_token_generator.check_token(user, token):
+                if password == confirm_password:
+                    user.set_password(password)
+                    user.save()
+                    return Response({"message": "Password reset successful."})
+                else:
+                    return Response(
+                        {"error": "Passwords do not match."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+            else:
+                return Response(
+                    {"error": "Invalid link or token."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
