@@ -146,9 +146,77 @@ https://i.imgur.com/s6p3mMl.gif
 
 ## 느낀점
 
-막상 시작해보니 모르는ㄴ게 너무 많았고
-기본적인 기능은 
-그동안 파이썬으로 여러가지를 만들면서 장고를 다루면서 만나는 오류들은 그렇게 어렵지는 않았지만 프론트쪽의 자바스크립트가 정말 어려웠습니다.
-AWS에 서버를 계속 접하는 오류들로 자료를 뒤지면서 올리는 것도 1주일 정도 걸렸던 것 같습니다
+Upgrade_Django4
 
-남들처럼 게시판 만들기 정도로 하는게 내 수준에 맞지 않나 괜히 이걸로 했나 라는 생각도 들었지만 분명히 끝까지 해내면 내 성장에 도움이 된다는 생각으로 열심히 했던 것 같스빈다.
+├─ accounts
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms.py
+│  ├─ helpers.py
+│  ├─ models.py
+│  ├─ serializers.py
+│  ├─ tests.py
+│  ├─ urls.py
+│  ├─ views.py
+│  └─ views_api.py
+├─ carts
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ context_processors.py
+│  ├─ models.py
+│  ├─ tests.py
+│  ├─ urls.py
+│  └─ views.py
+├─ category
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ context_processors.py
+│  ├─ models.py
+│  ├─ tests.py
+│  ├─ views.py
+│  └─ __init__.py
+├─ data.json
+├─ greatkart
+│  ├─ asgi.py
+│  ├─ settings.py
+│  ├─ static
+│  ├─ tests
+│  │  ├─ conftest.py
+│  │  ├─ factories.py
+│  │  ├─ test_accounts
+│  │  │  ├─ test_endpoints.py
+│  │  │  ├─ test_forms.py
+│  │  │  ├─ test_models.py
+│  │  │  ├─ test_views.py
+│  │  │  └─ __init__.py
+│  │  └─ __init__.py
+│  ├─ urls.py
+│  ├─ views.py
+│  ├─ wsgi.py
+│  └─ __init__.py
+├─ manage.py
+├─ orders
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms.py
+│  ├─ models.py
+│  ├─ tests.py
+│  ├─ urls.py
+│  ├─ views.py
+│  └─ __init__.py
+├─ pytest.ini
+├─ README.md
+├─ requirements.txt
+├─ static
+├─ store
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms.py
+│  ├─ models.py
+│  ├─ tests.py
+│  ├─ urls.py
+│  ├─ views.py
+│  └─ __init__.py
+└─ templates
+
+```

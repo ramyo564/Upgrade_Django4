@@ -47,3 +47,7 @@ class UserLoginSerializer(serializers.Serializer):
 class EmailVerificationSerializer(serializers.Serializer):
     uidb64 = serializers.CharField()
     token = serializers.CharField()
+
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()

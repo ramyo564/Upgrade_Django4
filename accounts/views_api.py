@@ -20,6 +20,7 @@ from .serializers import (
     EmailVerificationSerializer,
     UserLoginSerializer,
     UserRegisterSerializer,
+    ForgotPasswordSerializer,
 )
 
 User = get_user_model()
@@ -207,3 +208,45 @@ class AccountViewSet(viewsets.ViewSet):
         return Response(
             {"message": "Logged out successfully."}, status=status.HTTP_200_OK
         )
+
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="forgot_password",
+        authentication_classes=[],
+        permission_classes=[AllowAny],
+        serializer_class=ForgotPasswordSerializer,
+    )
+    def forgot_password(self, request):
+        serializer = ForgotPasswordSerializer(data=request.data)
+        email = request.data.get("email")
+        if serializer.is_valid():
+            if Account.objects.filter(email=email).exists():
+                user = Account.objects.get(email=email)
+
+                # Send email verification
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                host = get_current_host(request)
+                link = (
+                    "{host}api/verification/check_email_verification/{uid}/{token}".format(
+                        host=host, uid=uid, token=token
+                    )
+                )
+                body = (
+                    "Please click on the link below to reset your password.\n"
+                    "{link}".format(link=link)
+                )
+                send_mail(
+                    "Please reset your password",
+                    body,
+                    "noreply@eshop.com",
+                    [email],
+                )
+
+            return Response(
+                {"details": "Verification email sent to: {email}".format(email=email)}
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
