@@ -148,6 +148,7 @@ https://i.imgur.com/s6p3mMl.gif
 
 Upgrade_Django4
 
+```
 ├─ accounts
 │  ├─ admin.py
 │  ├─ apps.py
