@@ -1,3 +1,4 @@
+
 import requests
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-import logging
+
 from carts.models import Cart, CartItem
 from carts.views import _cart_id
 from orders.models import Order, OrderProduct
@@ -31,9 +32,7 @@ def register(request):
             user.save()
 
             # 사용자 프로필 생성
-            UserProfile.objects.create(
-                user=user, profile_picture="default/avatar.webp"
-            )
+            UserProfile.objects.create(user=user, profile_picture="default/avatar.webp")
 
             # 사용자 활성화
             current_site = get_current_site(request)
@@ -63,9 +62,9 @@ def register(request):
 
 
 def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
 
         user = auth.authenticate(email=email, password=password)
 
@@ -107,27 +106,27 @@ def login(request):
                             for item in cart_item:
                                 item.user = user
                                 item.save()
-            except:
-                pass
-            
+            except Exception as e:
+                print("An error in cart occurred:", e)
+
             auth.login(request, user)
-            messages.success(request, 'You are now logged in.')
-            url = request.META.get('HTTP_REFERER')
+            messages.success(request, "You are now logged in.")
+            url = request.META.get("HTTP_REFERER")
 
             try:
                 query = requests.utils.urlparse(url).query
                 # next=/cart/checkout/
-                params = dict(x.split('=') for x in query.split('&'))
-                if 'next' in params:
-                    nextPage = params['next']
+                params = dict(x.split("=") for x in query.split("&"))
+                if "next" in params:
+                    nextPage = params["next"]
                     return redirect(nextPage)
-            except:
-                print("login pass")
-                return redirect('dashboard')
+            except Exception as e:
+                print("An error in URL occurred:", e)
+                return redirect("dashboard")
         else:
-            messages.error(request, 'Invalid login credentials')
-            return redirect('login')
-    return render(request, 'accounts/login.html')
+            messages.error(request, "Invalid login credentials")
+            return redirect("login")
+    return render(request, "accounts/login.html")
 
 
 @login_required(login_url="login")
@@ -143,7 +142,9 @@ def activate(reqeust, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
 
-        print(f"user : {user} , token : {default_token_generator.check_token(user, token)}")
+        print(
+            f"user : {user} , token : {default_token_generator.check_token(user, token)}"
+        )
     except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
         user = None
 

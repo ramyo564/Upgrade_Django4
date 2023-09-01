@@ -111,35 +111,31 @@ class LoginViewTest(TestCase):
         self.user.is_active = True
         self.user.save()
 
-    def test_successful_login(self):
-        client = Client()
-        # Simulate a POST request to the login view with a next parameter
-        response = client.post(
-            reverse("login"),
-            {"email": "test@example.com", "password": "testpassword"},
-        )
-        print(f"response: {response}")
-        # Check that the response status code is 302 (redirect)
-        self.assertEqual(response.status_code, 302)
-        # Check that the redirect URL ends with "/accounts/"
-        self.assertTrue(response.url.endswith("/accounts/"))
-
-    # def test_successful_login_with_next_page(self):
+    # def test_successful_login(self):
     #     client = Client()
     #     # Simulate a POST request to the login view with a next parameter
     #     response = client.post(
-    #         reverse("login") + "?next=/cart/checkout/",
+    #         reverse("login"),
     #         {"email": "test@example.com", "password": "testpassword"},
     #     )
     #     print(f"response: {response}")
     #     # Check that the response status code is 302 (redirect)
     #     self.assertEqual(response.status_code, 302)
     #     # Check that the redirect URL ends with "/accounts/"
-    #     self.assertTrue(response.url.endswith("/cart/checkout/"))
+    #     self.assertTrue(response.url.endswith("/accounts/"))
 
-# assertContainsv
-
-
+    def test_successful_login_with_next_page(self):
+        client = Client()
+        # Simulate a POST request to the login view with a next parameter
+        response = client.post(
+            reverse("login"),
+            {"email": "test@example.com", "password": "testpassword"},
+            HTTP_REFERER='http://127.0.0.1:8000/accounts/login/?next=/cart/checkout/'  # 이 부분을 추가하여 HTTP_REFERER 헤더 설정
+        )
+        # Check that the response status code is 302 (redirect)
+        self.assertEqual(response.status_code, 302)
+        # Check that the redirect URL ends with "/cart/checkout/"
+        self.assertTrue(response.url.endswith("/cart/checkout/"))
 
 
     # def test_login_valid_credentials(self):
