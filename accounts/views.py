@@ -63,9 +63,10 @@ def register(request):
 
 
 def login(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
@@ -90,6 +91,9 @@ def login(request):
                         ex_var_list.append(list(existing_variation))
                         id.append(item.id)
 
+                    # product_variation = [1, 2, 3, 4, 6]
+                    # ex_var_list = [4, 6, 3, 5]
+
                     for pr in product_variation:
                         if pr in ex_var_list:
                             index = ex_var_list.index(pr)
@@ -98,39 +102,32 @@ def login(request):
                             item.quantity += 1
                             item.user = user
                             item.save()
-
                         else:
                             cart_item = CartItem.objects.filter(cart=cart)
                             for item in cart_item:
                                 item.user = user
                                 item.save()
-            except Exception as e:
-                logging.error(f"An error occurred: {e}")
+            except:
                 pass
-
+            
             auth.login(request, user)
-            messages.success(request, "You are new logged in.")
-            url = request.META.get("HTTP_REFERER")
+            messages.success(request, 'You are now logged in.')
+            url = request.META.get('HTTP_REFERER')
+
             try:
                 query = requests.utils.urlparse(url).query
-                print("query -> ", query)
-                print("---------")
                 # next=/cart/checkout/
-                params = dict(x.split("=") for x in query.split("&"))
-                print("params -> ", params)
-
-                if "next" in params:
-                    nextPage = params["next"]
+                params = dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
                     return redirect(nextPage)
-
-            except Exception as e:
-                print("An error occurred:", e)
-                return redirect("dashboard")
+            except:
+                print("login pass")
+                return redirect('dashboard')
         else:
-            messages.error(request, "Invalid login credentials")
-            return redirect("login")
-
-    return render(request, "accounts/login.html")
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')
+    return render(request, 'accounts/login.html')
 
 
 @login_required(login_url="login")

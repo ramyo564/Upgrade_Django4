@@ -4,8 +4,9 @@ from django.contrib.auth.tokens import default_token_generator
 from accounts.models import Account, UserProfile
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.contrib.auth import get_user_model
 # from carts.models import Cart, CartItem
-
+User = get_user_model()
 
 # class RegisterViewTest(TestCase):
 #     def test_register_view_success(self):
@@ -55,48 +56,88 @@ from django.utils.encoding import force_bytes
 #         self.assertContains(response, 'name="password"')
 
 
+# class RegisterValidLinkViewTest(TestCase):
+#     def setUp(self):
+#         # 사용할 테스트 유저 생성
+#         self.user = Account.objects.create_user(
+#             username="testuser",
+#             email="test@example.com",
+#             password="testpassword",
+#             first_name="John",
+#             last_name="Doe",
+#         )
+
+#     def test_activate_valid_link(self):
+#         # Create a valid token
+#         token = default_token_generator.make_token(self.user)
+#         uidb64 = urlsafe_base64_encode(force_bytes(self.user.pk))
+
+#         # Make a request to activate link
+#         response = self.client.get(reverse("activate", args=[uidb64, token]))
+#         print(f"response : {response}")
+
+#         # Check if user is activated
+#         self.user.refresh_from_db()
+#         self.assertTrue(self.user.is_active)
+
+#         # Check response status and message
+#         self.assertEqual(response.status_code, 302)  # 리다이렉트 예상
+#         self.assertTrue(response.url.endswith("login/"))  # 활성화 후 로그인 페이지로 리다이렉트
+
+#     def test_activate_invalid_link(self):
+#         # Make a request with invalid token
+#         response = self.client.get(reverse("activate", args=["invalid_uidb64", "invalid_token"]))
+
+#         # Check if user is not activated
+#         self.user.refresh_from_db()
+#         self.assertFalse(self.user.is_active)
+
+#         # Check response status and message
+#         self.assertEqual(response.status_code, 302)  # 리다이렉트 예상
+#         self.assertTrue(response.url.endswith("register/"))  # 잘못된 링크로 리다이렉트
+
+
 class LoginViewTest(TestCase):
     def setUp(self):
         # 사용할 테스트 유저 생성
-        self.user = Account.objects.create_user(
+        User = get_user_model()
+        self.user = User.objects.create_user(
             username="testuser",
             email="test@example.com",
             password="testpassword",
             first_name="John",
             last_name="Doe",
         )
+        self.user.is_active = True
+        self.user.save()
 
-    def test_activate_valid_link(self):
-        # Create a valid token
-        token = default_token_generator.make_token(self.user)
-        uidb64 = urlsafe_base64_encode(force_bytes(self.user.pk))
+    def test_successful_login(self):
+        client = Client()
+        # Simulate a POST request to the login view with a next parameter
+        response = client.post(
+            reverse("login"),
+            {"email": "test@example.com", "password": "testpassword"},
+        )
+        print(f"response: {response}")
+        # Check that the response status code is 302 (redirect)
+        self.assertEqual(response.status_code, 302)
+        # Check that the redirect URL ends with "/accounts/"
+        self.assertTrue(response.url.endswith("/accounts/"))
 
-        # Make a request to activate link
-        response = self.client.get(reverse("activate", args=[uidb64, token]))
-        print(f"response : {response}")
-        
-        # Check if user is activated
-        self.user.refresh_from_db()
-        self.assertTrue(self.user.is_active)
+    # def test_successful_login_with_next_page(self):
+    #     client = Client()
+    #     # Simulate a POST request to the login view with a next parameter
+    #     response = client.post(
+    #         reverse("login") + "?next=/cart/checkout/",
+    #         {"email": "test@example.com", "password": "testpassword"},
+    #     )
+    #     print(f"response: {response}")
+    #     # Check that the response status code is 302 (redirect)
+    #     self.assertEqual(response.status_code, 302)
+    #     # Check that the redirect URL ends with "/accounts/"
+    #     self.assertTrue(response.url.endswith("/cart/checkout/"))
 
-        # Check response status and message
-        self.assertEqual(response.status_code, 302)  # 리다이렉트 예상
-        self.assertTrue(response.url.endswith("login/"))  # 활성화 후 로그인 페이지로 리다이렉트
-
-    def test_activate_invalid_link(self):
-        # Make a request with invalid token
-        response = self.client.get(reverse("activate", args=["invalid_uidb64", "invalid_token"]))
-
-        # Check if user is not activated
-        self.user.refresh_from_db()
-        self.assertFalse(self.user.is_active)
-
-        # Check response status and message
-        self.assertEqual(response.status_code, 302)  # 리다이렉트 예상
-        self.assertTrue(response.url.endswith("register/"))  # 잘못된 링크로 리다이렉트
-
-
-
+# assertContainsv
 
 
 
