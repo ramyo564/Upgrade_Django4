@@ -94,8 +94,6 @@ pip install -r requirements.txt
 
 3. migrate
 
-![DB 환경설정](https://github.com/ramyo564/wanted-pre-onboarding-backend/assets/103474568/e953e48a-45fa-4b5e-b049-21146aaad745)  
-
   - 마이그레이션전에 꼭 로컬 DB 환경을 확인해주세요 AWS DB 부분은 주석처리하고 MySQl DATABASE로 설정해야합니다.
   - settings.py 에서 로컬환경을 다시 한 번 확인해주고 문제가 없다면 패키지 설치가 끝난 뒤에 아래의 명령어를 실행해줍니다.     
 
