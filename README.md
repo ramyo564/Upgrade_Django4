@@ -54,7 +54,85 @@ Version 2 : 1. 기존 사이트는 유지하면서 DRF를 이용해 백엔드와
 ```
 python -m venv venv
 ```
+![가상환경 셋팅](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/df3806c8-2781-4669-9a0e-39fc5c6b4d4a)
+
+
+2. 가상환경 활성화
+
+  - Windows
+```
+source venv/Scripts/activate
+```
+  - Mac
+```
+source venv/bin/activate
+```
+
+- 올바르게 실행 되었다면 터미널에 (venv)라고 터미널창에서 확인 가능합니다.
+
+----- 
+#### 4. 환경설정
+
+1. 가상환경이 활성화 되어있다면 현재 라이브러리 목록을 확인해줍니다.
+
+```python
+pip list
+```
+  - 새로운 환경이므로 Package 리스트에 pip, setuptools 만 보이면 정상입니다.
+
+![pip 리스트](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/bb67b0a6-097b-4417-bfb1-c52a60e4466d)
+
+
+2. 필요한 라이브러리를 설치
+
+```python
+pip install -r requirements.txt
+```
+
+  - 설치시 몇 분 걸릴 수 있습니다.
+  - 다시 pip list를 통해 requirements.txt에 있는 목록과 일치하는지 확인해줍니다.     
+
+3. migrate
+
+![DB 환경설정](https://github.com/ramyo564/wanted-pre-onboarding-backend/assets/103474568/e953e48a-45fa-4b5e-b049-21146aaad745)  
+
+  - 마이그레이션전에 꼭 로컬 DB 환경을 확인해주세요 AWS DB 부분은 주석처리하고 MySQl DATABASE로 설정해야합니다.
+  - settings.py 에서 로컬환경을 다시 한 번 확인해주고 문제가 없다면 패키지 설치가 끝난 뒤에 아래의 명령어를 실행해줍니다.     
+
+```python
+python manage.py migrate
+```
+
+4. create_superuser (option)
+
+```python
+python manage.py createsuperuser
+```
+
+  - 윈도우 환경에서 오류가 난다면 아래의 명령어를 사용해 보세요     
+
+```python
+winpty python manage.py createsuperuser
+```
+
+  - 이메일주소와 비밀번호를 입력하면 됩니다.
+	- (비밀번호 생성시 터미널에서 아무 것도 안나오는 게 정상입니다 :ㅇ)
+
+5. Run server
+
+  - 마이그레이션이 끝났다면 아래의 명령어를 실행해서 서버를 실행!
+
+```python
+python manage.py runserver
+```
+
+
+```
 (작업중)
+```
+
+
+
 
 ### 데이터 베이스 테이블 구조
 
