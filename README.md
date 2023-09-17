@@ -92,31 +92,14 @@ pip install -r requirements.txt
   - 설치시 몇 분 걸릴 수 있습니다.
   - 다시 pip list를 통해 requirements.txt에 있는 목록과 일치하는지 확인해줍니다.     
 
-3. migrate
-
-  - 마이그레이션전에 꼭 로컬 DB 환경을 확인해주세요 AWS DB 부분은 주석처리하고 MySQl DATABASE로 설정해야합니다.
-  - settings.py 에서 로컬환경을 다시 한 번 확인해주고 문제가 없다면 패키지 설치가 끝난 뒤에 아래의 명령어를 실행해줍니다.     
+3. superuser 
 
 ```python
-python manage.py migrate
+ID : test@naver.com
+PASS : anwkrdnlqlalfqjsgh
 ```
 
-4. create_superuser (option)
-
-```python
-python manage.py createsuperuser
-```
-
-  - 윈도우 환경에서 오류가 난다면 아래의 명령어를 사용해 보세요     
-
-```python
-winpty python manage.py createsuperuser
-```
-
-  - 이메일주소와 비밀번호를 입력하면 됩니다.
-	- (비밀번호 생성시 터미널에서 아무 것도 안나오는 게 정상입니다 :ㅇ)
-
-5. Run server
+4. Run server
 
   - 마이그레이션이 끝났다면 아래의 명령어를 실행해서 서버를 실행!
 
@@ -125,9 +108,16 @@ python manage.py runserver
 ```
 
 
+5. Admin page
+
+  - http://127.0.0.1:8000/admin/ 은 fake 어드민 페이지입니다.
+  - 위 주소로 로그인 시도를 하면 IP가 남도록 되어있고 해당 IP를 차단시켜 접속을 제한할 수 있습니다.
+  - admin 페이지를 확인하시려면 밑의 주소로 접속하시면 됩니다.
+
+```python
+(http://127.0.0.1:8000/securelogin/)
 ```
-(작업중)
-```
+
 
 
 
