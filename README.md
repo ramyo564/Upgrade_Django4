@@ -194,10 +194,8 @@ python manage.py runserver
   - http://127.0.0.1:8000/admin/ 은 fake 어드민 페이지입니다.
   - 위 주소로 로그인 시도를 하면 IP가 남도록 되어있고 해당 IP를 차단시켜 접속을 제한할 수 있습니다.
   - admin 페이지를 확인하시려면 밑의 주소로 접속하시면 됩니다.
+  - http://127.0.0.1:8000/securelogin/ <- 진짜 어드민 페이지
 
-```python
-(http://127.0.0.1:8000/securelogin/)
-```
 
 6. API_KEY 설정
 
