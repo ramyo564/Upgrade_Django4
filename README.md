@@ -117,6 +117,7 @@
 
 
 ## Version 1 실행방법
+
 ### 1. 프로젝트 다운로드
 
 1. 깃 레파지토리 선택 -> `Version_1_only_Django_Local`
@@ -198,7 +199,10 @@ python manage.py runserver
 (http://127.0.0.1:8000/securelogin/)
 ```
 
+6. API_KEY 설정
 
+   - 로컬테스트에서 이메일 본인인증, 카카오페이, 페이팔 기능은 settings.py에서 따로 설정하셔야 합니다.
+   - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 -> 
 
 
 
