@@ -200,7 +200,14 @@ python manage.py runserver
 6. API_KEY 설정
 
    - 로컬테스트에서 이메일 본인인증, 카카오페이, 페이팔 기능은 settings.py에서 따로 설정하셔야 합니다.
-   - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 -> 
+   - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 :
+   -  ![](https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link)
+   -  https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link
+   -  관리자 페이지 아이디와 비밀번호
+```py
+id : test@naver.com
+pass : anwkrdnlqlalfqjsgh
+```
 
 
 
