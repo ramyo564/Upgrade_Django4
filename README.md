@@ -221,6 +221,16 @@ pass : anwkrdnlqlalfqjsgh
 
 ## 4. 각 App의 기능 설명
 
+## 목차
+- [accounts](https://github.com/ramyo564/Upgrade_Django4/tree/main#accounts)
+- [carts](https://github.com/ramyo564/Upgrade_Django4/tree/main#carts)
+- [category](https://github.com/ramyo564/Upgrade_Django4/tree/main#category)
+- [orders](https://github.com/ramyo564/Upgrade_Django4/tree/main#orders)
+- [store](https://github.com/ramyo564/Upgrade_Django4/tree/main#store)
+
+
+
+
 ### accounts
 ```
 ├─ accounts 
