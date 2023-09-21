@@ -119,6 +119,13 @@
 
 ## 3. Version 1 실행방법
 
+## 실행방법 목차
+[1. 프로젝트 다운로드](https://github.com/ramyo564/Upgrade_Django4/tree/main#1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C)
+
+[2. 가상환경 셋팅](https://github.com/ramyo564/Upgrade_Django4/tree/main#2-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-%EC%85%8B%ED%8C%85)
+
+[3. 환경설정](https://github.com/ramyo564/Upgrade_Django4/tree/main#3-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95)
+
 ### 1. 프로젝트 다운로드
 
 1. 깃 레파지토리 선택 -> `Version_1_only_Django_Local`
@@ -222,6 +229,7 @@ pass : anwkrdnlqlalfqjsgh
 ## 4. 각 App의 기능 설명
 
 ## 목차
+- [Version 1 처음 목차 돌아가기](https://github.com/ramyo564/Upgrade_Django4/tree/main#version-1-%EB%AA%A9%EC%B0%A8)
 - [accounts](https://github.com/ramyo564/Upgrade_Django4/tree/main#accounts)
 - [carts](https://github.com/ramyo564/Upgrade_Django4/tree/main#carts)
 - [category](https://github.com/ramyo564/Upgrade_Django4/tree/main#category)
@@ -504,6 +512,7 @@ pass : anwkrdnlqlalfqjsgh
 ## 5. 이미지 및 소감
 
 ## 목차
+- [Version 1 처음 목차 돌아가기](https://github.com/ramyo564/Upgrade_Django4/tree/main#version-1-%EB%AA%A9%EC%B0%A8)
 - [User](#user)
 	- 로그인 / 로그아웃
 	- 회원가입 
