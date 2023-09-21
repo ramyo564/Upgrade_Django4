@@ -209,7 +209,7 @@ python manage.py runserver
 
    - 로컬테스트에서 이메일 본인인증, 카카오페이, 페이팔 기능은 settings.py에서 따로 설정하셔야 합니다.
    - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 :
-   -  https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link
+   - 동영상 👉👉👉  https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link
    -  관리자 페이지 아이디와 비밀번호
 ```py
 id : test@naver.com
@@ -520,11 +520,25 @@ pass : anwkrdnlqlalfqjsgh
 	- 대시보드
 		- 프로필, 마이페이지, 주문조회
 - [Review](#review)
+	- 각 리뷰 평균 및 카운팅
+	- 회원 및 구매한 이력이 있을 경우만 댓글 달기 가능
 - [Search](#search)
+	- 쿼리에 걸리는 아이템 갯수 카운팅
+	- 검색 기능
 - [Payment](#payment)
+	- SDK 와 REST API 두 가지 방법으로 개발
+		- SDK 는 PayPal
+  		- REST API 는 카카오 페이 
 - [Paginator](#paginator)
+	- Paginator 내장 함수로 구현
 - [Cart](#cart)
+	- 장바구니에서 아이템 추가 및 삭제
+	- 세션을 통해 로근인 했을 때 중복된 상품이 있을 경우 상품 증가
+	- 그렇지 않은 경우 장바구니에 새로 추가
+	- 주소 찾기는 Daum API로 구현
 - [Sort by](#sort-by)
+	- 카테고리 및 필터기능 적용
+		 - 폼 형식으로 랜더링
 
 ## User
 
