@@ -31,10 +31,11 @@
 
 
 ## Version 1 목차
-- 1. Project Structure
-- 2. 데이터베이스 테이블 구조
-- 3. Version 1 실행방법
-- 4. 각 App의 기능 설명
+- 1. [Project Structure](https://github.com/ramyo564/Upgrade_Django4/edit/main/README.md#1-project-structure)
+- 2. [데이터베이스 테이블 구조](https://github.com/ramyo564/Upgrade_Django4/edit/main/README.md#2-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B5%AC%EC%A1%B0)
+- 3. [Version 1 실행방법](https://github.com/ramyo564/Upgrade_Django4/edit/main/README.md#3-version-1-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)
+- 4. [각 App의 기능 설명](https://github.com/ramyo564/Upgrade_Django4/edit/main/README.md#4-%EA%B0%81-app%EC%9D%98-%EA%B8%B0%EB%8A%A5-%EC%84%A4%EB%AA%85)
+- 5. [이미지 및 소감](https://github.com/ramyo564/Upgrade_Django4/edit/main/README.md#5-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%B0%8F-%EC%86%8C%EA%B0%90)
 
 ## 1. Project Structure
 ```
@@ -116,7 +117,7 @@
 ![UpgradeDjango4 drawio](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/9bd8a9ac-8b81-4491-a31f-60129e42553d)
 
 
-## Version 1 실행방법
+## 3. Version 1 실행방법
 
 ### 1. 프로젝트 다운로드
 
@@ -201,7 +202,6 @@ python manage.py runserver
 
    - 로컬테스트에서 이메일 본인인증, 카카오페이, 페이팔 기능은 settings.py에서 따로 설정하셔야 합니다.
    - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 :
-   -  ![](https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link)
    -  https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link
    -  관리자 페이지 아이디와 비밀번호
 ```py
@@ -491,4 +491,138 @@ pass : anwkrdnlqlalfqjsgh
 		-  `submit_review` : 
 			- 사용자 리뷰를 제출하거나 업데이트하는 기능을 제공 제품 페이지에서 리뷰를 작성하고 제출할 때 호출
 
+## 5. 이미지 및 소감
 
+## 목차
+- [User](#user)
+	- 로그인 / 로그아웃
+	- 회원가입 
+		- 이메일 토큰 링크를 통한 본인인증
+	- 대시보드
+		- 프로필, 마이페이지, 주문조회
+- [Review](#review)
+- [Search](#search)
+- [Payment](#payment)
+- [Paginator](#paginator)
+- [Cart](#cart)
+- [Sort by](#sort-by)
+
+## User
+
+> 1. 장고의 기본 BaseUserManager, AbstractBaseUser 를 이용해서 회원가입 모델을 구현했습니다.
+> 2. 핸드폰 번호의 유효성 검사의 경우 `PhoneNumberField` 라이브러리를 사용해 구현했습니다.
+> 3. 회원가입을 할 때 가입한 이메일로 토큰을 보내고 해당 링크로 접속했을 때의 pk와 토큰이 일치할 경우에만 본인인증이 확인되어 계정이 활성화 되도록 구현했습니다.
+
+### 회원가입 및 본인인증
+- 비밀번호 일치 및 핸드폰, 이메일 유효성 검사를 구현했습니다.
+- 회원가입을 했을 경우 본인인증된 이메일을 통해서만 계정이 활성화 됩니다.
+	- 회원 가입시 기재한 이메일 주소로 토큰과 uid
+
+![register](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/22cbe0ec-4c48-4646-86e9-1deb2a45b891)
+
+
+### 비밀번호 찾기
+- 가입한 이메일 주소가 존재할 경우 해당 이메일이 전송됩니다.
+- 회원가입과 같은 방식으로 본인인증이 진행되며 본인인증이 완료되면 새로운 비밀번호를 설정 할합니다.
+- 새로운 비밀번호로 로그인에 성공하면 계정이 다시 활성화됩니다.
+
+![비밀번호 찾기](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/16402f92-ec52-45eb-8ade-040bc6249c5f)
+
+
+### 프로필 사진 및 비밀번호 변경
+
+- 회원가입 때 기본으로 생성된 프로필이 변경가능하며 비밀번호도 변경이 가능합니다.
+
+![프로필 사진 및 비밀번호 변경](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/51bba84e-c82c-4d4c-98cb-d6d91372b1b6)
+
+
+### 주문번호 확인
+
+![주문번호 확인](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/75eeab29-e69c-479c-999a-b31682f457b4)
+
+
+## Review
+
+> Review 기능은 크게 두 가지로 나눠서 살펴볼 수 있습니다.
+> 	1. 회원과 비회원 그리고 구매자와 비 구매자를 각각 나눠서 유저의 경로가 달라집니다.
+> 	2. 아이템마다 각각 달리는 리뷰 개수 와 총 별점의 평균을 나타냅니다.
+
+
+### 비회원일 때 댓글을 달 수 없는 기능
+
+- 로그인이 되어있지 않은 경우 로그인 페이지가 나옵니다.
+- 로그인이 되어있는 상태이지만 물건을 구매한 적이 없다면 리뷰를 달 수 없습니다.
+
+## 페이지
+
+### 회원일 때 댓글을 달 수 있는 기능
+
+![댓글 달기](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/076be1fd-0784-4933-85ec-23e49fbbc3ec)
+
+- 회원일 경우 리뷰를 남길 수 있으며 리뷰를 남김과 동시에 제품에 총 리뷰 개수가 카운팅 되며 별점은 전체 별점 총 평균에 반영됩니다.
+
+### 평균 별점 반영 및 리뷰 개수 카운팅
+
+![평균 별점 계산 카운팅](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/34c5ac3f-9269-4dca-b266-e3a44e769292)
+
+
+
+## Search
+
+> 검색 기능은 판매자가 상품을 등록할 때 설명이나 제품명이 키워드에 걸리면 반영해 주는 쿼리를 반영합니다.
+> 해당 쿼리에 걸리는 상품 개수를 카운팅 합니다.
+
+![검색기능](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/ff3d5d8a-0247-4728-a18c-54f4b494ec8a)
+
+
+## Payment
+>  결제 방식은 SDK 와 REST API 두 가지 방법을 사용했고
+>  SDK 방식은 페이팔, REST API 방식은 카카오 페이를 선택했습니다.
+
+### 카카오페이 
+
+![카카오페이 결제](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/b814cd6a-0692-42bc-b81b-115e1a059cfd)
+
+
+### 페이팔 
+
+![페이팔 결제](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/0a4061ad-65dd-4a76-8dc8-ebc3afb5cc58)
+
+
+
+## Paginator 
+> 장고에서 제공하는 Paginator를 사용하여 페이지 단위를 구현했습니다.  
+
+![페이지네이션](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/3a4ca17b-e9db-4b55-a83d-2a4add264263)
+
+
+## Cart
+
+> 1. 장바구니에서 아이템 추가 및 삭제를 구현했습니다.
+> 2. 세션을 활용하여 비로그인 상태에서 장바구니에 물건을 담았다가 로그인을 했을 때 중복된 상품이 있을 경우는 해당 상품의 개수가 늘어나고 그렇지 않은 경우에는 새로 장바구니에 추가되도록 구현했습니다.
+> 3. 주소 찾기는 DAUM API를 이용했습니다. 
+
+![장바구니](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/c4783734-02a4-408f-aed8-b3fea6764b61)
+
+
+## Sort by
+
+> 상품을 필터링할 때 다음과 같은 알고리즘으로 만들었습니다.
+
+![상품 알고리즘](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/3616acc6-fd8a-48a0-8e8a-0153f8b5e39d)
+
+( 개발할 당시에는 자료구조애 대해 잘 몰라서 if문으로만 구현 했지만 이번에 자료구조를 공부하면서 더 좋은 방법으로 만들 수 있을 것 같아 DRF 버전을 개발할 때 적용하려고 합니다!)
+
+## 카테고리 및 필터링 적용
+
+![카테고리 기능 및 필터링 기능](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/7931c64d-2549-4096-accf-bff84d04ea04)
+
+
+## 느낀점
+
+막상 시작해보니 생각보다 모르는게 너무 많았고
+특히 프론트쪽의 자바스크립트가 정말 어려웠습니다.
+단순히 AWS를 통해 서버를 올리는 것에도 정말 많은 오류들을 만났고
+구글링을 하면서 1주일 정도 걸렸던 것 같습니다.
+
+분명 어려운 도전이 였지만 많은 걸 배울 수 있어서 재밌었습니다.
