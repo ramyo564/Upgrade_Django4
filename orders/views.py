@@ -1,23 +1,26 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from carts.models import CartItem
-from .forms import OrderForm
 import datetime
-from .models import Order, Payment, OrderProduct
-from django.conf import settings
 import json
+
 import requests
-import datetime
-from store.models import Product
+from django.conf import settings
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+
+from carts.models import CartItem
+from store.models import Product
+
+from .forms import OrderForm
+from .models import Order, OrderProduct, Payment
 
 # Create your views here.
 last_order_number = 0
 
 
 def kakao_pay(request):
-    BASE_URL = "https://yohanyohan.com"
+    # BASE_URL = "https://yohanwebsite.com"
+    BASE_URL = "http://127.0.0.1:8000/"
     if request.method == "POST":
         current_user = request.user
 
