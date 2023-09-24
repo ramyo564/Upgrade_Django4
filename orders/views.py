@@ -19,7 +19,7 @@ last_order_number = 0
 
 
 def kakao_pay(request):
-    BASE_URL = "https://yohanwebsite.com"
+    BASE_URL = "https://yohanyohan.com"
     # BASE_URL = "http://127.0.0.1:8000/"
     if request.method == "POST":
         current_user = request.user
