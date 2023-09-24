@@ -549,7 +549,7 @@ pass : anwkrdnlqlalfqjsgh
 ### 회원가입 및 본인인증
 - 비밀번호 일치 및 핸드폰, 이메일 유효성 검사를 구현했습니다.
 - 회원가입을 했을 경우 본인인증된 이메일을 통해서만 계정이 활성화 됩니다.
-	- 회원 가입시 기재한 이메일 주소로 토큰과 uid
+	- 회원 가입시 기재한 이메일 주소로 토큰과 uid와 대조하여 본인 인증을 진행합니다.
 
 ![register](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/22cbe0ec-4c48-4646-86e9-1deb2a45b891)
 
