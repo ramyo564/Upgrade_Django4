@@ -702,7 +702,9 @@ pass : anwkrdnlqlalfqjsgh
   
 - TDD(Test-Driven Development) 개념을 도입하여 pytest와 factory-boy 등을 사용하여 대규모 트래픽을 고려한 테스트 코드를 작성하고 있습니다.     
 
-- DRF를 적용하면서 현재 쇼핑몰을 유지려면 URL path가 복잡해지는데 ViewSet을 이용하면 좀 더 간편하게 관리가 가능하다고 생각해서 ViewSet으로 만들고 있습니다.     
+- DRF를 적용하면서 현재 쇼핑몰을 유지려면 URL path가 복잡해지는데 ViewSet을 이용하면 좀 더 간편하게 관리가 가능하다고 생각해서 ViewSet으로 만들고 있습니다.
+
+- drf-spectacular를 사용해서 API 문서 자동화 및 스웨거를 적용하고 있습니다.
 
 - 또한 현재 진행하고 있는 팀 프로젝트에서 비동기로 채팅 기능을 구현하고 있는데 상담원 연결 등 배운 내용을 접목하려고 계획 중입니다.       
 
