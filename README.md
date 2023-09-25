@@ -67,7 +67,6 @@
 │  ├─ tests.py
 │  ├─ views.py
 │  └─ __init__.py
-├─ data.json
 ├─ greatkart
 │  ├─ asgi.py
 │  ├─ settings.py
