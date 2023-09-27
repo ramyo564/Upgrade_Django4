@@ -27,7 +27,7 @@
 | 프레임워크 | Django - 4.2.2      |
 | DB         | PostgreSQL - 15.3 |
 | API        |       카카오페이, PayPal, Daum 주소           |
-| Devops           |    AWS - EC2, S3, RDS, Route53, VPC, IAM, Beanstalk               |
+| Devops           |    AWS - Elastic Beanstalk, S3, RDS, Route53, VPC, IAM               |
 
 
 ## Version 1 목차
