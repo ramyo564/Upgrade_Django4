@@ -31,11 +31,11 @@
 
 
 ## Version 1 목차
-- 1. [Project Structure](https://github.com/ramyo564/Upgrade_Django4/tree/main#1-project-structure)
-- 2. [데이터베이스 테이블 구조](https://github.com/ramyo564/Upgrade_Django4/tree/main#2-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B5%AC%EC%A1%B0)
+- 1. [Project Structure](https://github.com/ramyo564/Upgrade_Django4/tree/main?tab=readme-ov-file#1-project-structure)
+- 2. [데이터베이스 테이블 구조](https://github.com/ramyo564/Upgrade_Django4/tree/main?tab=readme-ov-file#2-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B5%AC%EC%A1%B0)
 - 3. [기능 구현 이미지](https://github.com/ramyo564/Upgrade_Django4/tree/main#5-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-%EC%9D%B4%EB%AF%B8%EC%A7%80)
-- 4. [Version 1 실행방법](https://github.com/ramyo564/Upgrade_Django4/tree/main#3-version-1-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)
-- 5. [각 App의 기능 설명](https://github.com/ramyo564/Upgrade_Django4/tree/main#4-%EA%B0%81-app%EC%9D%98-%EA%B8%B0%EB%8A%A5-%EC%84%A4%EB%AA%85)
+- 4. [Version 1 실행방법](https://github.com/ramyo564/Upgrade_Django4/tree/main?tab=readme-ov-file#4-version-1-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)
+- 5. [각 App의 기능 설명](https://github.com/ramyo564/Upgrade_Django4/tree/main?tab=readme-ov-file#5-%EA%B0%81-app%EC%9D%98-%EA%B8%B0%EB%8A%A5-%EC%84%A4%EB%AA%85)
 - 6. [회고](https://github.com/ramyo564/Upgrade_Django4/tree/main#6-%ED%9A%8C%EA%B3%A0)
 
 ## 1. Project Structure
