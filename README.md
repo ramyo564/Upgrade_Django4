@@ -39,6 +39,8 @@
 ![Django4 쇼핑몰 AWS 아키텍쳐](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/e19728f1-ec2c-4357-a8bd-efe2fa8cf2f9)
 
 
+### b. Django 아키텍쳐
+
 ```mermaid
 graph TD
     %% ──────────────── 루트 레이어 ────────────────
@@ -96,7 +98,9 @@ graph TD
     end
 ```
 
-### b. Project Structure
+<br>
+
+### c. Project Structure
 
 <details>
 <summary><b> 이미지 펼쳐보기 (클릭)  👈 </b></summary>
@@ -178,7 +182,7 @@ graph TD
 </details>
 
 
-### c. 데이터 베이스 테이블 구조
+### d. 데이터 베이스 테이블 구조
 
 ![UpgradeDjango4 drawio](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/9bd8a9ac-8b81-4491-a31f-60129e42553d)
 
