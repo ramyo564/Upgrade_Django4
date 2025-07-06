@@ -24,6 +24,14 @@
 | Devops           |    AWS - Elastic Beanstalk, S3, RDS, Route53, VPC, IAM               |
 
 
+## 목차
+
+[1. 아키텍처](https://github.com/ramyo564/Upgrade_Django4/tree/main#1-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)   
+[2. 기능구현 (이미지)](https://github.com/ramyo564/Upgrade_Django4/tree/main#2-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-%EC%9D%B4%EB%AF%B8%EC%A7%80)   
+[3. 핵심 문제 해결 경험](https://github.com/ramyo564/Upgrade_Django4/tree/main#3-%ED%95%B5%EC%8B%AC-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0-%EA%B2%BD%ED%97%98)   
+[4. Version 1 실행방법](https://github.com/ramyo564/Upgrade_Django4/tree/main#4-version-1-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)   
+
+
 ## 1. 아키텍처
 
 ### a. AWS Elastic Beanstalk 서비스 아키텍쳐
@@ -175,7 +183,7 @@ graph TD
 ![UpgradeDjango4 drawio](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/9bd8a9ac-8b81-4491-a31f-60129e42553d)
 
 
-## 2. 기능 구현 이미지
+## 2. 기능 구현 (이미지)
 
 ### 목차
 
@@ -448,6 +456,10 @@ python manage.py dumpdata > datadump.json
 	- '데이터 마이그레이션'이라는 막연한 문제 앞에서, '표준 형식을 통한 데이터 이관'이라는 가설을 세우고 Django의 내장 기능을 활용해 직접 문제를 해결했습니다.
 
 
+<br>
+
+---
+
 ### 🔥 2. 보안을 고려한 인증 플로우 설계
 
 단순한 로그인 기능을 넘어, 실제 서비스의 안정성을 위협할 수 있는 다양한 보안 시나리오를 고려하여 사용자 인증 시스템을 설계했습니다.
@@ -465,7 +477,8 @@ python manage.py dumpdata > datadump.json
 #### 💡 해결 과정
 
 1. **토큰 기반 이메일 인증:** 
-	- 사용자가 회원가입을 하면, 계정은 비활성 상태로 생성됩니다. 동시에 Django의 `EmailMultiAlternatives`와 `urlsafe_base64_encode`를 사용하여 사용자 ID와 일회성 토큰이 포함된 인증 링크를 이메일로 발송합니다. 
+	- 사용자가 회원가입을 하면, 계정은 비활성 상태로 생성됩니다.
+        - 동시에 Django의 `EmailMultiAlternatives`와 `urlsafe_base64_encode`를 사용하여 사용자 ID와 일회성 토큰이 포함된 인증 링크를 이메일로 발송합니다. 
 	- 사용자가 이 링크를 클릭해야만 계정이 활성화되도록 구현했습니다.
 2. **가짜 어드민 페이지(Honeypot):** 
 	- 일반적인 `/admin` URL로 접근 시, 실제 로그인 페이지가 아닌 가짜 로그인 페이지를 보여줍니다. 
@@ -479,7 +492,9 @@ python manage.py dumpdata > datadump.json
 - **보안에 대한 깊은 이해:** 
 	- 일반적인 기능 구현을 넘어, 발생 가능한 보안 위협을 먼저 예측하고 방어적인 코드를 작성하는 경험을 했습니다.
 
-  
+<br>
+
+---
 
 ### 🔥 3. 복잡한 커머스 로직 구현
 
@@ -517,7 +532,9 @@ python manage.py dumpdata > datadump.json
 	- 방식이 다른 두 종류의 외부 결제 API를 성공적으로 연동하며, 외부 시스템과의 통합 개발에 대한 자신감을 얻었습니다.
 
 
+<br>
 
+---
 
 ## 4. Version 1 실행방법
 
