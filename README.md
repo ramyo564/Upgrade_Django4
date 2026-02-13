@@ -5,6 +5,7 @@
 - 또한 회원가입, 인증, 결제 및 CRUD 등 기초적이지만 중요한 기술들을 연습하기에 좋다고 생각했습니다.
 
 ## About
+<a id="lm-about-version2"></a>
 
 - 개발 기간 : 2023.05 ~ 
 - 개발 인원 : 1명 (개인 프로젝트)
@@ -35,11 +36,13 @@
 ## 1. 아키텍처
 
 ### a. AWS Elastic Beanstalk 서비스 아키텍쳐
+<a id="lm-arch-aws-eb"></a>
 
 ![Django4 쇼핑몰 AWS 아키텍쳐](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/e19728f1-ec2c-4357-a8bd-efe2fa8cf2f9)
 
 
 ### b. Django 아키텍쳐
+<a id="lm-arch-django-apps"></a>
 
 ```mermaid
 graph TD
@@ -101,6 +104,7 @@ graph TD
 <br>
 
 ### c. Project Structure
+<a id="lm-arch-project-structure"></a>
 
 <details>
 <summary><b> 이미지 펼쳐보기 (클릭)  👈 </b></summary>
@@ -183,6 +187,7 @@ graph TD
 
 
 ### d. 데이터 베이스 테이블 구조
+<a id="lm-arch-db-schema"></a>
 
 ![UpgradeDjango4 drawio](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/9bd8a9ac-8b81-4491-a31f-60129e42553d)
 
@@ -230,6 +235,7 @@ graph TD
 ---
 
 ### User
+<a id="lm-feature-user-auth"></a>
 
 > 1. 장고의 기본 BaseUserManager, AbstractBaseUser 를 이용해서 회원가입 모델을 구현했습니다.
 > 2. 핸드폰 번호의 유효성 검사의 경우 `PhoneNumberField` 라이브러리를 사용해 구현했습니다.
@@ -286,6 +292,7 @@ graph TD
 ---
 
 ### Review
+<a id="lm-feature-review-system"></a>
 
 > Review 기능은 크게 두 가지로 나눠서 살펴볼 수 있습니다.
 > 	1. 회원과 비회원 그리고 구매자와 비 구매자를 각각 나눠서 유저의 경로가 달라집니다.
@@ -323,6 +330,7 @@ graph TD
 ---
 
 ### Search
+<a id="lm-feature-search"></a>
 
 > 검색 기능은 판매자가 상품을 등록할 때 설명이나 제품명이 키워드에 걸리면 반영해 주는 쿼리를 반영합니다.
 > 해당 쿼리에 걸리는 상품 개수를 카운팅 합니다.
@@ -339,6 +347,7 @@ graph TD
 ---
 
 ### Payment
+<a id="lm-feature-payment"></a>
 >  결제 방식은 SDK 와 REST API 두 가지 방법을 사용했고
 >  SDK 방식은 페이팔, REST API 방식은 카카오 페이를 선택했습니다.
 
@@ -366,6 +375,7 @@ graph TD
 ---
 
 ### Paginator 
+<a id="lm-feature-paginator"></a>
 > 장고에서 제공하는 Paginator를 사용하여 페이지 단위를 구현했습니다.  
 <details>
 <summary><b> gif 이미지 펼쳐보기 (클릭)  👈 </b></summary>
@@ -379,6 +389,7 @@ graph TD
 ---
 
 ### Cart
+<a id="lm-feature-cart-session"></a>
 
 > 1. 장바구니에서 아이템 추가 및 삭제를 구현했습니다.
 > 2. 세션을 활용하여 비로그인 상태에서 장바구니에 물건을 담았다가 로그인을 했을 때 중복된 상품이 있을 경우는 해당 상품의 개수가 늘어나고 그렇지 않은 경우에는 새로 장바구니에 추가되도록 구현했습니다.
@@ -395,6 +406,7 @@ graph TD
 ---
 
 ### Sort by
+<a id="lm-feature-sort-filter"></a>
 
 > 상품을 필터링할 때 다음과 같은 알고리즘으로 만들었습니다.
 
@@ -407,6 +419,7 @@ graph TD
 ---
 
 ### 카테고리 및 필터링 적용
+<a id="lm-feature-category-filter"></a>
 
 <details>
 <summary><b> gif 이미지 펼쳐보기 (클릭)  👈 </b></summary>
@@ -423,6 +436,7 @@ graph TD
 
 
 ### 🔥 1. AWS 클라우드 배포 및 데이터 마이그레이션
+<a id="lm-case-aws-migration"></a>
 
 **가장 큰 난관은 로컬에서 개발한 서비스를 실제 사용자가 접근할 수 있는 클라우드 환경에 배포하는 것이었습니다.**     
 AWS에 대한 지식이 부족한 상태에서 인프라를 구축하고, 특히 개발 환경의 SQLite DB를 프로덕션 환경의 PostgreSQL로 마이그레이션하는 과정에서 큰 어려움을 겪었습니다.
@@ -465,6 +479,7 @@ python manage.py dumpdata > datadump.json
 ---
 
 ### 🔥 2. 보안을 고려한 인증 플로우 설계
+<a id="lm-case-auth-security"></a>
 
 단순한 로그인 기능을 넘어, 실제 서비스의 안정성을 위협할 수 있는 다양한 보안 시나리오를 고려하여 사용자 인증 시스템을 설계했습니다.
 
@@ -501,6 +516,7 @@ python manage.py dumpdata > datadump.json
 ---
 
 ### 🔥 3. 복잡한 커머스 로직 구현
+<a id="lm-case-commerce-logic"></a>
 
 익명 사용자와 로그인 사용자의 경험을 모두 고려하고, 서로 다른 방식의 외부 결제 시스템을 연동하며 복잡한 이커머스 로직을 구현했습니다.
 
