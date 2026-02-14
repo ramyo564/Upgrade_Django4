@@ -166,7 +166,7 @@ export const diagrams = {
     `,
 
     'payment-unified-order-flow': `
-        graph LR
+        graph TD
         Checkout[checkout page] --> PlaceOrder[place_order]
         PlaceOrder --> PendingOrder[Order is_ordered false]
 
@@ -264,7 +264,7 @@ export const diagrams = {
     `,
 
     'version2-separation-plan': `
-        graph LR
+        graph TD
         V1[V1 Django Template Fullstack] --> KeepStable[Maintain service stability]
         KeepStable --> AddAPI[Add DRF endpoints by domain]
         AddAPI --> AuthAPI[Account APIs first]
@@ -337,7 +337,7 @@ export const diagrams = {
     `,
 
     'migration-sqlite-to-postgres': `
-        graph LR
+        graph TD
         LocalSQLite[(Local SQLite DB)] --> Dump[dumpdata to datadump.json]
         Dump --> Transfer[Transfer dump file to cloud env]
         Transfer --> AWSApp[EB Django runtime]

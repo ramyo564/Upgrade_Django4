@@ -21,8 +21,10 @@ This folder contains a reusable dashboard package adapted from the shared `portf
 2. `diagrams.js` object key
 
 ## Learn More rules
-- `learnmore-links.js` points directly to `Upgrade_Django4/README.md` anchors (`#lm-*`).
-- Anchors must exist in `Upgrade_Django4/README.md`.
+- Hybrid mode is used:
+1. `EVIDENCE` link opens internal evidence page (`docs/evidence/upgrade_django4/index.html#<card-id>`).
+2. `README` link opens original `Upgrade_Django4/README.md` anchor (`#lm-*`).
+- `learnmore-links.js` keeps README anchor mapping and is reused to generate README links in cards.
 
 ## Validation checklist
 - All cards render mermaid diagrams

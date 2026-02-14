@@ -56,7 +56,10 @@ const mapCards = (ids) => ids.map((id) => ({
     mermaidId: id,
     title: cardMeta[id]?.title ?? id,
     description: cardMeta[id]?.description ?? '',
-    learnMore: learnMoreLinks[id] ?? '#'
+    links: [
+        { label: 'EVIDENCE', href: `./evidence/upgrade_django4/index.html#${id}`, variant: 'primary' },
+        { label: 'README', href: learnMoreLinks[id] ?? '#', variant: 'ghost' }
+    ]
 }));
 
 export const templateConfig = {
@@ -184,6 +187,7 @@ export const templateConfig = {
         actions: [
             { label: 'GITHUB', href: 'https://github.com/ramyo564/Upgrade_Django4' },
             { label: 'EMAIL', href: 'mailto:yohan032yohan@gmail.com' },
+            { label: 'EVIDENCE', href: './evidence/upgrade_django4/index.html' },
             { label: 'DEMO_VIDEO', href: 'https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link' }
         ]
     },
