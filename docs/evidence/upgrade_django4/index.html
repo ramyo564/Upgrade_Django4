@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upgrade_Django4 Evidence</title>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T84WT3B8');</script>
+    <!-- End Google Tag Manager -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
@@ -342,6 +352,11 @@
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T84WT3B8" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <header class="index-header">
         <div class="index-inner">
             <div class="index-top">
@@ -369,27 +384,32 @@
     <main class="wrap">
         <section class="panel">
             <h2>Overview</h2>
-            <p class="muted">Hybrid mode: each architecture card now links to this internal evidence (code + README cross-check) and also keeps direct README access.</p>
-            <p class="muted" style="margin-top:8px;">Use the header index to jump across cards. On mobile, open the INDEX button (hamburger mode).</p>
+            <p class="muted">Hybrid mode: each architecture card now links to this internal evidence (code + README
+                cross-check) and also keeps direct README access.</p>
+            <p class="muted" style="margin-top:8px;">Use the header index to jump across cards. On mobile, open the
+                INDEX button (hamburger mode).</p>
         </section>
 
         <section class="evidence-grid">
-        <section id="django-app-architecture" class="panel">
-            <span class="badge">ARCHITECTURE</span>
-            <h2>Django App Architecture</h2>
-            <p class="case-summary">README claim and code alignment for app/module composition.</p>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-django-apps" target="_blank" rel="noopener noreferrer">README#lm-arch-django-apps</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L37" target="_blank" rel="noopener noreferrer">greatkart/settings.py#L37</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L15" target="_blank" rel="noopener noreferrer">greatkart/urls.py#L15</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">INSTALLED_APPS + Root URL routing</span>
-                <pre><code class="language-python">INSTALLED_APPS = [
+            <section id="django-app-architecture" class="panel">
+                <span class="badge">ARCHITECTURE</span>
+                <h2>Django App Architecture</h2>
+                <p class="case-summary">README claim and code alignment for app/module composition.</p>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-django-apps"
+                            target="_blank" rel="noopener noreferrer">README#lm-arch-django-apps</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L37"
+                            target="_blank" rel="noopener noreferrer">greatkart/settings.py#L37</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L15"
+                            target="_blank" rel="noopener noreferrer">greatkart/urls.py#L15</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">INSTALLED_APPS + Root URL routing</span>
+                    <pre><code class="language-python">INSTALLED_APPS = [
     ...,
     "category", "accounts", "store", "carts", "orders"
 ]
@@ -400,28 +420,32 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("orders/", include("orders.urls")),
 ]</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: README architecture statement is consistent with settings/urls composition.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: README architecture statement is consistent with settings/urls composition.</p>
+            </section>
 
-        <section id="commerce-data-model" class="panel">
-            <span class="badge">ARCHITECTURE</span>
-            <h2>Commerce Data Model</h2>
-            <p class="case-summary">README DB structure claim cross-checked with cart/order/product relations.</p>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-db-schema" target="_blank" rel="noopener noreferrer">README#lm-arch-db-schema</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/carts/models.py#L15" target="_blank" rel="noopener noreferrer">carts/models.py#L15</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/models.py#L19" target="_blank" rel="noopener noreferrer">orders/models.py#L19</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/store/models.py#L10" target="_blank" rel="noopener noreferrer">store/models.py#L10</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Order/Product/Cart relations</span>
-                <pre><code class="language-python">class CartItem(models.Model):
+            <section id="commerce-data-model" class="panel">
+                <span class="badge">ARCHITECTURE</span>
+                <h2>Commerce Data Model</h2>
+                <p class="case-summary">README DB structure claim cross-checked with cart/order/product relations.</p>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-db-schema"
+                            target="_blank" rel="noopener noreferrer">README#lm-arch-db-schema</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/carts/models.py#L15"
+                            target="_blank" rel="noopener noreferrer">carts/models.py#L15</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/models.py#L19"
+                            target="_blank" rel="noopener noreferrer">orders/models.py#L19</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/store/models.py#L10"
+                            target="_blank" rel="noopener noreferrer">store/models.py#L10</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Order/Product/Cart relations</span>
+                    <pre><code class="language-python">class CartItem(models.Model):
     user = models.ForeignKey(Account, ...)
     product = models.ForeignKey(Product, ...)
     variations = models.ManyToManyField(Variation, blank=True)
@@ -435,26 +459,29 @@ class OrderProduct(models.Model):
     order = models.ForeignKey(Order, ...)
     product = models.ForeignKey(Product, ...)
     variations = models.ManyToManyField(Variation, blank=True)</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: core commerce entities are explicitly connected in Django models.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: core commerce entities are explicitly connected in Django models.</p>
+            </section>
 
-        <section id="email-verification-flow" class="panel">
-            <span class="badge">FEATURE</span>
-            <h2>Email Verification Flow</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-user-auth" target="_blank" rel="noopener noreferrer">README#lm-feature-user-auth</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L23" target="_blank" rel="noopener noreferrer">accounts/views.py#L23</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L139" target="_blank" rel="noopener noreferrer">accounts/views.py#L139</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Register + Activate token check</span>
-                <pre><code class="language-python">message = render_to_string(..., {
+            <section id="email-verification-flow" class="panel">
+                <span class="badge">FEATURE</span>
+                <h2>Email Verification Flow</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-user-auth"
+                            target="_blank" rel="noopener noreferrer">README#lm-feature-user-auth</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L23"
+                            target="_blank" rel="noopener noreferrer">accounts/views.py#L23</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L139"
+                            target="_blank" rel="noopener noreferrer">accounts/views.py#L139</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Register + Activate token check</span>
+                    <pre><code class="language-python">message = render_to_string(..., {
     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
     "token": default_token_generator.make_token(user),
 })
@@ -463,26 +490,29 @@ send_email = EmailMessage(mail_subject, message, to=[to_email])
 if user is not None and default_token_generator.check_token(user, token):
     user.is_active = True
     user.save()</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: account activation is gated by uid/token verification.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: account activation is gated by uid/token verification.</p>
+            </section>
 
-        <section id="session-cart-merge-flow" class="panel">
-            <span class="badge">FEATURE</span>
-            <h2>Session Cart Merge Flow</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-cart-session" target="_blank" rel="noopener noreferrer">README#lm-feature-cart-session</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/carts/views.py#L9" target="_blank" rel="noopener noreferrer">carts/views.py#L9</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L64" target="_blank" rel="noopener noreferrer">accounts/views.py#L64</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Session key + variation merge on login</span>
-                <pre><code class="language-python">def _cart_id(request):
+            <section id="session-cart-merge-flow" class="panel">
+                <span class="badge">FEATURE</span>
+                <h2>Session Cart Merge Flow</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-cart-session"
+                            target="_blank" rel="noopener noreferrer">README#lm-feature-cart-session</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/carts/views.py#L9"
+                            target="_blank" rel="noopener noreferrer">carts/views.py#L9</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L64"
+                            target="_blank" rel="noopener noreferrer">accounts/views.py#L64</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Session key + variation merge on login</span>
+                    <pre><code class="language-python">def _cart_id(request):
     cart = request.session.session_key
     if not cart:
         cart = request.session.create()
@@ -494,27 +524,31 @@ for pr in product_variation:
         item.quantity += 1
     else:
         item.user = user</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: session cart identity and login-time merge logic are implemented.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: session cart identity and login-time merge logic are implemented.</p>
+            </section>
 
-        <section id="payment-unified-order-flow" class="panel">
-            <span class="badge">FEATURE</span>
-            <h2>Unified Payment Order Flow</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-payment" target="_blank" rel="noopener noreferrer">README#lm-feature-payment</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L233" target="_blank" rel="noopener noreferrer">orders/views.py#L233 (place_order)</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L163" target="_blank" rel="noopener noreferrer">orders/views.py#L163 (payments)</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L75" target="_blank" rel="noopener noreferrer">orders/views.py#L75 (kakao_pay_approval)</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Common post-processing in both payment channels</span>
-                <pre><code class="language-python">order = Order.objects.get(..., is_ordered=False, ...)
+            <section id="payment-unified-order-flow" class="panel">
+                <span class="badge">FEATURE</span>
+                <h2>Unified Payment Order Flow</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-feature-payment"
+                            target="_blank" rel="noopener noreferrer">README#lm-feature-payment</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L233"
+                            target="_blank" rel="noopener noreferrer">orders/views.py#L233 (place_order)</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L163"
+                            target="_blank" rel="noopener noreferrer">orders/views.py#L163 (payments)</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L75"
+                            target="_blank" rel="noopener noreferrer">orders/views.py#L75 (kakao_pay_approval)</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Common post-processing in both payment channels</span>
+                    <pre><code class="language-python">order = Order.objects.get(..., is_ordered=False, ...)
 payment = Payment(...)
 order.payment = payment
 order.is_ordered = True
@@ -525,26 +559,29 @@ for item in cart_items:
     OrderProduct(...)
     product.stock -= item.quantity
 CartItem.objects.filter(user=request.user).delete()</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: PayPal and Kakao paths converge to the same order finalization steps.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: PayPal and Kakao paths converge to the same order finalization steps.</p>
+            </section>
 
-        <section id="drf-account-api-flow" class="panel">
-            <span class="badge">PLATFORM</span>
-            <h2>DRF Account API Flow</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2" target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views_api.py#L30" target="_blank" rel="noopener noreferrer">accounts/views_api.py#L30</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L27" target="_blank" rel="noopener noreferrer">greatkart/urls.py#L27</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">ViewSet action API + router</span>
-                <pre><code class="language-python">router = DefaultRouter()
+            <section id="drf-account-api-flow" class="panel">
+                <span class="badge">PLATFORM</span>
+                <h2>DRF Account API Flow</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2"
+                            target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views_api.py#L30"
+                            target="_blank" rel="noopener noreferrer">accounts/views_api.py#L30</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L27"
+                            target="_blank" rel="noopener noreferrer">greatkart/urls.py#L27</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">ViewSet action API + router</span>
+                    <pre><code class="language-python">router = DefaultRouter()
 router.register(r"account", accounts_views_api.AccountViewSet, ...)
 
 class AccountViewSet(viewsets.ViewSet):
@@ -553,53 +590,62 @@ class AccountViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["POST"], url_path="login")
     def login(self, request): ...</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: account APIs are exposed as DRF actions and wired by router.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: account APIs are exposed as DRF actions and wired by router.</p>
+            </section>
 
-        <section id="version2-separation-plan" class="panel">
-            <span class="badge">PLATFORM</span>
-            <h2>Version2 Separation Plan</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2" target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L18" target="_blank" rel="noopener noreferrer">greatkart/urls.py#L18 (template routes)</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L27" target="_blank" rel="noopener noreferrer">greatkart/urls.py#L27 (api routes)</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Co-existence of template and API paths</span>
-                <pre><code class="language-python">urlpatterns = [
+            <section id="version2-separation-plan" class="panel">
+                <span class="badge">PLATFORM</span>
+                <h2>Version2 Separation Plan</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2"
+                            target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L18"
+                            target="_blank" rel="noopener noreferrer">greatkart/urls.py#L18 (template routes)</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L27"
+                            target="_blank" rel="noopener noreferrer">greatkart/urls.py#L27 (api routes)</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Co-existence of template and API paths</span>
+                    <pre><code class="language-python">urlpatterns = [
     path("store/", include("store.urls")),
     path("cart/", include("carts.urls")),
     path("accounts/", include("accounts.urls")),
     path("orders/", include("orders.urls")),
     path("api/", include(router.urls)),
 ]</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="partial">Partially aligned: separation path exists (template + API coexist), but full FE/BE split is still roadmap phase.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="partial">Partially aligned: separation path exists (template + API coexist), but full FE/BE
+                    split is still roadmap phase.</p>
+            </section>
 
-        <section id="pytest-test-structure" class="panel">
-            <span class="badge">QUALITY</span>
-            <h2>Pytest Test Structure</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2" target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/conftest.py#L1" target="_blank" rel="noopener noreferrer">greatkart/tests/conftest.py#L1</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/factories.py#L11" target="_blank" rel="noopener noreferrer">greatkart/tests/factories.py#L11</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/test_accounts/test_endpoints.py#L1" target="_blank" rel="noopener noreferrer">greatkart/tests/test_accounts/test_endpoints.py#L1</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Fixture/factory base + account test package</span>
-                <pre><code class="language-python"># conftest.py
+            <section id="pytest-test-structure" class="panel">
+                <span class="badge">QUALITY</span>
+                <h2>Pytest Test Structure</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-about-version2"
+                            target="_blank" rel="noopener noreferrer">README#lm-about-version2</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/conftest.py#L1"
+                            target="_blank" rel="noopener noreferrer">greatkart/tests/conftest.py#L1</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/factories.py#L11"
+                            target="_blank" rel="noopener noreferrer">greatkart/tests/factories.py#L11</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/tests/test_accounts/test_endpoints.py#L1"
+                            target="_blank"
+                            rel="noopener noreferrer">greatkart/tests/test_accounts/test_endpoints.py#L1</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Fixture/factory base + account test package</span>
+                    <pre><code class="language-python"># conftest.py
 from pytest_factoryboy import register
 from .factories import AccountFactory, UserProfileFactory
 register(AccountFactory)
@@ -609,112 +655,128 @@ register(UserProfileFactory)
 class AccountFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Account</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="partial">Partially aligned: test skeleton and factories exist, but several test files are still commented and need activation.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="partial">Partially aligned: test skeleton and factories exist, but several test files are
+                    still commented and need activation.</p>
+            </section>
 
-        <section id="aws-eb-topology" class="panel">
-            <span class="badge">CLOUD</span>
-            <h2>AWS Elastic Beanstalk Topology</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-aws-eb" target="_blank" rel="noopener noreferrer">README#lm-arch-aws-eb</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/.ebextensions/django.config#L1" target="_blank" rel="noopener noreferrer">.ebextensions/django.config#L1</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L176" target="_blank" rel="noopener noreferrer">greatkart/settings.py#L176</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">EB runtime and static/media setup</span>
-                <pre><code class="language-yaml">option_settings:
+            <section id="aws-eb-topology" class="panel">
+                <span class="badge">CLOUD</span>
+                <h2>AWS Elastic Beanstalk Topology</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-arch-aws-eb"
+                            target="_blank" rel="noopener noreferrer">README#lm-arch-aws-eb</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/.ebextensions/django.config#L1"
+                            target="_blank" rel="noopener noreferrer">.ebextensions/django.config#L1</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L176"
+                            target="_blank" rel="noopener noreferrer">greatkart/settings.py#L176</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">EB runtime and static/media setup</span>
+                    <pre><code class="language-yaml">option_settings:
   aws:elasticbeanstalk:container:python:
     WSGIPath: greatkart.wsgi:application
   aws:elasticbeanstalk:environment:proxy:staticfiles:
     /static: static</code></pre>
-            </div>
-            <div class="code-snippet">
-                <span class="code-snippet-label">S3-backed static/media settings</span>
-                <pre><code class="language-python">AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+                </div>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">S3-backed static/media settings</span>
+                    <pre><code class="language-python">AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 DEFAULT_FILE_STORAGE = "greatkart.media_storages.MediaStorage"</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: EB runtime options and AWS storage settings are present in config code.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: EB runtime options and AWS storage settings are present in config code.</p>
+            </section>
 
-        <section id="migration-sqlite-to-postgres" class="panel">
-            <span class="badge">CASE</span>
-            <h2>Case: SQLite to PostgreSQL Migration</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-aws-migration" target="_blank" rel="noopener noreferrer">README#lm-case-aws-migration</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L122" target="_blank" rel="noopener noreferrer">greatkart/settings.py#L122</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/.ebextensions/db-migrate.config#L1" target="_blank" rel="noopener noreferrer">.ebextensions/db-migrate.config#L1</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Environment-based DB backend switch + migration command</span>
-                <pre><code class="language-python">if "RDS_DB_NAME" in os.environ:
+            <section id="migration-sqlite-to-postgres" class="panel">
+                <span class="badge">CASE</span>
+                <h2>Case: SQLite to PostgreSQL Migration</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-aws-migration"
+                            target="_blank" rel="noopener noreferrer">README#lm-case-aws-migration</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L122"
+                            target="_blank" rel="noopener noreferrer">greatkart/settings.py#L122</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/.ebextensions/db-migrate.config#L1"
+                            target="_blank" rel="noopener noreferrer">.ebextensions/db-migrate.config#L1</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Environment-based DB backend switch + migration command</span>
+                    <pre><code class="language-python">if "RDS_DB_NAME" in os.environ:
     DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql", ...}}
 else:
     DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", ...}}</code></pre>
-            </div>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Elastic Beanstalk migration hook</span>
-                <pre><code class="language-yaml">container_commands:
+                </div>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Elastic Beanstalk migration hook</span>
+                    <pre><code class="language-yaml">container_commands:
   01_migrate:
     command: "source /var/app/venv/*/bin/activate && python3 manage.py migrate"
     leader_only: true</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: README migration narrative is supported by runtime DB switching and EB migration automation.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: README migration narrative is supported by runtime DB switching and EB migration
+                    automation.</p>
+            </section>
 
-        <section id="auth-hardening-case" class="panel">
-            <span class="badge">CASE</span>
-            <h2>Case: Auth Security Hardening</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-auth-security" target="_blank" rel="noopener noreferrer">README#lm-case-auth-security</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L16" target="_blank" rel="noopener noreferrer">greatkart/urls.py#L16</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L47" target="_blank" rel="noopener noreferrer">greatkart/settings.py#L47</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L139" target="_blank" rel="noopener noreferrer">accounts/views.py#L139</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Honeypot route + secure admin route + token activation</span>
-                <pre><code class="language-python">path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+            <section id="auth-hardening-case" class="panel">
+                <span class="badge">CASE</span>
+                <h2>Case: Auth Security Hardening</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-auth-security"
+                            target="_blank" rel="noopener noreferrer">README#lm-case-auth-security</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/urls.py#L16"
+                            target="_blank" rel="noopener noreferrer">greatkart/urls.py#L16</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/greatkart/settings.py#L47"
+                            target="_blank" rel="noopener noreferrer">greatkart/settings.py#L47</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L139"
+                            target="_blank" rel="noopener noreferrer">accounts/views.py#L139</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Honeypot route + secure admin route + token activation</span>
+                    <pre><code class="language-python">path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
 path("securelogin/", admin.site.urls),
 
 if user is not None and default_token_generator.check_token(user, token):
     user.is_active = True</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: both admin attack-surface control and email-based activation are implemented.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: both admin attack-surface control and email-based activation are implemented.</p>
+            </section>
 
-        <section id="commerce-integration-case" class="panel">
-            <span class="badge">CASE</span>
-            <h2>Case: Commerce Integration</h2>
-            <h3>README Source</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-commerce-logic" target="_blank" rel="noopener noreferrer">README#lm-case-commerce-logic</a></li>
-            </ul>
-            <h3>Code Evidence</h3>
-            <ul>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L64" target="_blank" rel="noopener noreferrer">accounts/views.py#L64 (login merge)</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L163" target="_blank" rel="noopener noreferrer">orders/views.py#L163 (PayPal flow)</a></li>
-                <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L75" target="_blank" rel="noopener noreferrer">orders/views.py#L75 (Kakao flow)</a></li>
-            </ul>
-            <div class="code-snippet">
-                <span class="code-snippet-label">Session merge + payment-postprocess integration</span>
-                <pre><code class="language-python"># login path
+            <section id="commerce-integration-case" class="panel">
+                <span class="badge">CASE</span>
+                <h2>Case: Commerce Integration</h2>
+                <h3>README Source</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/README.md#lm-case-commerce-logic"
+                            target="_blank" rel="noopener noreferrer">README#lm-case-commerce-logic</a></li>
+                </ul>
+                <h3>Code Evidence</h3>
+                <ul>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/accounts/views.py#L64"
+                            target="_blank" rel="noopener noreferrer">accounts/views.py#L64 (login merge)</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L163"
+                            target="_blank" rel="noopener noreferrer">orders/views.py#L163 (PayPal flow)</a></li>
+                    <li><a href="https://github.com/ramyo564/Upgrade_Django4/blob/main/orders/views.py#L75"
+                            target="_blank" rel="noopener noreferrer">orders/views.py#L75 (Kakao flow)</a></li>
+                </ul>
+                <div class="code-snippet">
+                    <span class="code-snippet-label">Session merge + payment-postprocess integration</span>
+                    <pre><code class="language-python"># login path
 cart = Cart.objects.get(cart_id=_cart_id(request))
 ...
 item.user = user
@@ -724,16 +786,19 @@ order.payment = payment
 order.is_ordered = True
 ...
 CartItem.objects.filter(user=request.user).delete()</code></pre>
-            </div>
-            <h3>Assessment</h3>
-            <p class="ok">Aligned: cart/session continuity and dual-payment integration are implemented with shared order state transitions.</p>
-        </section>
+                </div>
+                <h3>Assessment</h3>
+                <p class="ok">Aligned: cart/session continuity and dual-payment integration are implemented with shared
+                    order state transitions.</p>
+            </section>
         </section>
 
         <section class="panel">
             <h2>Note</h2>
-            <p class="muted">This page is the internal evidence destination for architecture cards. It compares README statements with concrete code paths before final portfolio-wide rollout.</p>
-            <p class="muted" style="margin-top:8px;">Back to architecture dashboard: <a href="../../index.html">Upgrade_Django4/docs/index.html</a></p>
+            <p class="muted">This page is the internal evidence destination for architecture cards. It compares README
+                statements with concrete code paths before final portfolio-wide rollout.</p>
+            <p class="muted" style="margin-top:8px;">Back to architecture dashboard: <a
+                    href="../../index.html">Upgrade_Django4/docs/index.html</a></p>
         </section>
     </main>
 </body>
