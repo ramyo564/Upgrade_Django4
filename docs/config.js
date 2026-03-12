@@ -64,14 +64,14 @@ const mapCards = (ids) => ids.map((id) => ({
 
 export const templateConfig = {
     system: {
-        documentTitle: 'Yohan | Upgrade Django4 Dashboard',
-        systemName: 'UPGRADE_DJANGO4_V2.1'
+        documentTitle: 'Yohan | Django Commerce Architecture Dashboard',
+        systemName: 'DJANGO_COMMERCE_ARCHITECTURE_V2.1'
     },
 
     hero: {
         sectionId: 'system-architecture',
         panelTitle: 'SYSTEM_ARCHITECTURE',
-        panelUid: 'ID: UPGRADE-DJANGO4-01',
+        panelUid: 'ID: DJANGO-COMMERCE-01',
         diagramId: 'upgrade-django-system-architecture',
         metrics: [
             'Service Type: Django ecommerce (V1 templates) + DRF migration in progress (V2)',
@@ -86,7 +86,7 @@ export const templateConfig = {
         {
             sectionId: 'django-architecture-panel',
             panelTitle: 'DJANGO_ARCHITECTURE',
-            panelUid: 'ID: UPGRADE-DJANGO4-02',
+            panelUid: 'ID: DJANGO-COMMERCE-02',
             diagramId: 'django-architecture-overview',
             metrics: [
                 'App-based architecture with template and API endpoints coexisting during migration',
@@ -183,7 +183,7 @@ export const templateConfig = {
         sectionId: 'contact',
         panelTitle: 'CONTACT',
         panelUid: 'ID: CONTACT-01',
-        description: 'For collaboration, architecture discussion, or migration review, use one of the channels below.',
+        description: 'For collaboration, architecture discussion, or Django Commerce migration review, use one of the channels below.',
         actions: [
             { label: 'GITHUB', href: 'https://github.com/ramyo564/Upgrade_Django4' },
             { label: 'EMAIL', href: 'mailto:yohan032yohan@gmail.com' },
