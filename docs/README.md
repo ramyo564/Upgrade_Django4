@@ -22,7 +22,7 @@ This folder contains a reusable dashboard package adapted from the shared `portf
 
 ## Learn More rules
 - Hybrid mode is used:
-1. `EVIDENCE` link opens internal evidence page (`docs/evidence/upgrade_django4/index.html#<card-id>`).
+1. `EVIDENCE` link opens the card-level evidence page (`docs/evidence/upgrade_django4/index.html#<card-id>`).
 2. `README` link opens original `Upgrade_Django4/README.md` anchor (`#lm-*`).
 - `learnmore-links.js` keeps README anchor mapping and is reused to generate README links in cards.
 
