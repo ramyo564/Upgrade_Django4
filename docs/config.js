@@ -92,6 +92,11 @@ export const templateConfig = {
             '보안 체계: 이메일 토큰 활성화 + 어드민 허니팟 + 보안 경로 설정',
             '결제 통합: PayPal SDK 및 KakaoPay API 단일 주문 완료 계약 처리',
             '인프라: AWS Elastic Beanstalk, RDS PostgreSQL, S3, Route53, VPC'
+        ],
+        quickLinks: [
+            { label: 'GITHUB_REPO', href: 'https://github.com/ramyo564/Upgrade_Django4', variant: 'primary' },
+            { label: 'PROBLEM_SOLVING', href: 'https://ramyo564.github.io/Upgrade_Django4-portfolio/', variant: 'secondary' },
+            { label: 'PORTFOLIO_HUB', href: 'https://ramyo564.github.io/Portfolio/', variant: 'ghost' }
         ]
     },
 
@@ -237,7 +242,7 @@ export const templateConfig = {
         panelUid: 'ID: CONTACT-01',
         description: 'Django 커머스 아키텍처 및 마이그레이션 관련 협업을 위해 아래 채널로 연락 부탁드립니다.',
         actions: [
-            { label: 'GITHUB', href: 'https://github.com/ramyo564/Upgrade_Django4' },
+            { label: 'GITHUB_REPO', href: 'https://github.com/ramyo564/Upgrade_Django4' },
             { label: 'EMAIL', href: 'mailto:yohan032yohan@gmail.com' },
             { label: 'EVIDENCE', href: './evidence/upgrade_django4/index.html' },
             { label: 'DEMO_VIDEO', href: 'https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link' }
