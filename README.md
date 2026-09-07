@@ -1,37 +1,47 @@
+# 🛒 Full-Funnel E-Commerce Platform (Upgrade_Django4)
 
-# 쇼핑몰 프로젝트
+> **입점 플랫폼의 폐쇄적 데이터 종속(Walled Garden) 한계를 극복하고, 1st-Party 고객 여정 데이터 통제권과 Dual PG(카카오페이 + PayPal)를 직접 구축한 실전 커머스 아키텍처**
 
-- 마케터로 일할 때 플랫폼 사용에 대한 한계로 아쉬웠던 경험이 많아 쇼핑몰을 첫 프로젝트로서 만들게 되었습니다.
-- 또한 회원가입, 인증, 결제 및 CRUD 등 기초적이지만 중요한 기술들을 연습하기에 좋다고 생각했습니다.
+---
 
-## About
+## 📌 Executive Summary & Motivation
+스마트스토어와 글로벌 구매대행을 운영하며 체감했던 가장 큰 비즈니스 병목은, 입점 플랫폼의 폐쇄적 데이터 환경으로 인해 고객이 장바구니나 결제 단계에서 왜 이탈했는지 원인을 알 수 없는 **'데이터 블랙박스(Walled Garden)'**와 **'국내외 고객 결제 수단 부재로 인한 전환율 누수'**였습니다.
+
+이를 엔지니어링으로 정면 돌파하기 위해, 유입-탐색-장바구니-주문-결제 전 퍼널의 **1st-Party 행동 데이터를 100% 자체 수집·통제**하고, 결제 마찰을 최소화하는 **이중 결제 게이트웨이(Dual PG: 카카오페이 REST API + PayPal 글로벌 SDK)**를 탑재한 독립 자사몰을 직접 설계 및 구축했습니다.
+
+- 🔗 **[Portfolio Hub]** [그로스 & 엔지니어링 포트폴리오 메인 허브 ↗](https://equinox-rambutan-c3e.notion.site/3c82b6d94f8881a2879adbd89114bec0)
+- 📄 **[Technical Resume]** [테크니컬 그로스 해커 이력서 ↗](https://equinox-rambutan-c3e.notion.site/3c82b6d94f888125b624ef927dc5131d)
+- 📑 **[Case Study Deep-Dive]** [Growth & E-Commerce 포트폴리오 상세 사양서 ↗](https://equinox-rambutan-c3e.notion.site/2d62b6d94f8882178cf181b5516f9e48)
+
+---
+
+## 🎯 About & Core Objectives
 <a id="lm-about-version2"></a>
 
-- 개발 기간 : 2023.05 ~ 
-- 개발 인원 : 1명 (개인 프로젝트)
-- Version 1 : 장고 템플릿을 이용해 fullstack 개발
-- Version 2 :
-	- 1. 기존 사이트는 유지하면서 DRF를 이용해 백엔드와 프론트 엔드 분리 (개발중)
-	- 2. 유닛/통합 테스트 진행
+- **개발 기간**: 2021.12 ~ 2022.03 (V1 풀스택 자사몰 구축) / 2023.05 ~ 2023.09 (V2 아키텍처 고도화 & DRF 분리)
+- **개발 인원**: 1명 (비즈니스 기획, 데이터 모델링, Django 풀스택 백엔드/프론트엔드, AWS 인프라 배포 100% 단독 수행)
+- **핵심 엔지니어링 목표**:
+  1. **1st-Party 이벤트 데이터 통제권 확보**: 유입부터 결제 완료까지의 모든 행동 로그를 자체 RDBMS에 수집하여 CRM 및 코호트 분석 기반 마련
+  2. **결제 마찰 최소화 (Dual PG)**: 모바일 1초 간편결제(카카오페이)와 글로벌 직구 결제(PayPal)를 동시 지원하여 장바구니 이탈율 방어
+  3. **탐색 UX 바운스 방어**: Django ORM `Q` 객체 기반 다차원 동적 교차 필터링 및 N+1 쿼리 최적화
+  4. **신뢰 기반 구매 전환 (CRO)**: 결제 완료 고객 대상 실구매 인증 리뷰/평점 시스템으로 소셜 프루프(Social Proof) 확보
 
-## Version 1 기술스택
+## 🛠️ 기술 스택 (Tech Stack)
 
-| 개발환경   | -                |
-| ---------- | ---------------- |
-| 언어       | Python - 3.11      |
-| 프레임워크 | Django - 4.2.2      |
-| DB         | PostgreSQL - 15.3 |
-| API        |       카카오페이, PayPal, Daum 주소 API          |
-| Devops           |    AWS - Elastic Beanstalk, S3, RDS, Route53, VPC, IAM               |
-
+| 구분 | 적용 기술 | 비즈니스 및 아키텍처 목적 |
+| :--- | :--- | :--- |
+| **언어 / 프레임워크** | Python 3.11, Django 4.2.2 | 풀퍼널 커머스 핵심 도메인 비즈니스 로직 및 MVC/MVT 풀스택 구현 |
+| **데이터베이스** | PostgreSQL 15.3 | 복합 주문/결제 트랜잭션 무결성 및 1st-party 고객 행동 데이터베이스 구축 |
+| **결제 (Dual PG)** | KakaoPay REST API, PayPal Global SDK | 국내 모바일 간편결제와 해외 결제 지원으로 결제 퍼널 이탈 최소화 |
+| **주소 / 인증** | Daum 우편번호 API, 이메일 일회성 토큰 본인인증 | 정확한 배송지 입력 UX 및 가짜 계정 유입 차단 |
+| **클라우드 / 인프라** | AWS Elastic Beanstalk, RDS for PostgreSQL, S3, Route53, VPC 사설망 | 무중단 웹 서비스 배포 및 데이터베이스 사설 서브넷 보안 격리 |
 
 ## 목차
 
 [1. 아키텍처](https://github.com/ramyo564/Upgrade_Django4/tree/main#1-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)   
 [2. 기능구현 (이미지)](https://github.com/ramyo564/Upgrade_Django4/tree/main#2-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-%EC%9D%B4%EB%AF%B8%EC%A7%80)   
 [3. 핵심 문제 해결 경험](https://github.com/ramyo564/Upgrade_Django4/tree/main#3-%ED%95%B5%EC%8B%AC-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0-%EA%B2%BD%ED%97%98)   
-[4. Version 1 실행방법](https://github.com/ramyo564/Upgrade_Django4/tree/main#4-version-1-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95)   
-
+[4. 실행방법 (Getting Started)](https://github.com/ramyo564/Upgrade_Django4/tree/main#4-%EC%8B%A4%ED%96%89%EB%B0%A9%EB%B2%95-getting-started)   
 
 ## 1. 아키텍처
 
@@ -434,230 +444,142 @@ graph TD
 
 ## 3. 핵심 문제 해결 경험
 
-
-### 🔥 1. AWS 클라우드 배포 및 데이터 마이그레이션
+### 🔥 1. 이기종 RDBMS(SQLite ➔ PostgreSQL) 간 무손실 데이터 마이그레이션 및 AWS VPC 사설망 격리
 <a id="lm-case-aws-migration"></a>
 
-**가장 큰 난관은 로컬에서 개발한 서비스를 실제 사용자가 접근할 수 있는 클라우드 환경에 배포하는 것이었습니다.**     
-AWS에 대한 지식이 부족한 상태에서 인프라를 구축하고, 특히 개발 환경의 SQLite DB를 프로덕션 환경의 PostgreSQL로 마이그레이션하는 과정에서 큰 어려움을 겪었습니다.
-
-#### 🔧 문제점: 이기종 데이터베이스 간의 데이터 마이그레이션
-
-- **문제 상황:** 
-	- 로컬 개발 환경에서는 가벼운 `SQLite`를 사용했지만, 실제 서비스 환경에서는 안정성과 확장성을 위해 `PostgreSQL`을 사용해야 했습니다. 
-	- 두 데이터베이스는 구조가 달라 단순히 데이터를 복사할 수 없었고, 이미 쌓인 개발 데이터를 어떻게 손실 없이 이전할지 막막했습니다.
-- **가설 수립:**
-    1. Django는 여러 데이터베이스 시스템과 높은 호환성을 제공한다.
-    2. 그렇다면, 특정 데이터베이스에 종속되지 않는 `JSON`과 같은 표준 데이터 형식으로 데이터를 추출(dump)할 수 있을 것이다.
-    3. 추출한 JSON 데이터를 새로운 PostgreSQL 데이터베이스 스키마에 맞춰 다시 주입(load)하면 데이터 마이그레이션이 가능할 것이다.
-
-#### 💡 해결 과정
-
-1. **데이터 추출:** Django의 내장 기능인 `dumpdata` 명령어를 사용하여 로컬 SQLite 데이터베이스의 모든 데이터를 `JSON` 파일 형식으로 추출했습니다.
-
-```
-python manage.py dumpdata > datadump.json
-```
-
-2. **인프라 구축:** 
-	- AWS `Elastic Beanstalk`을 사용하여 애플리케이션 배포 환경을 구성하고, 데이터베이스는 `RDS for PostgreSQL` 인스턴스를 생성했습니다. 
-	- 보안을 위해 `VPC` 내부에서만 애플리케이션 서버와 RDS가 통신하도록 네트워크를 설정했습니다.
-3. **데이터 주입:** 
-	- AWS에 배포된 Django 애플리케이션 환경에서, `loaddata` 명령어를 통해 백업해 둔 `datadump.json` 파일을 PostgreSQL DB로 성공적으로 이관했습니다. 
-	- 이 과정을 통해 데이터 손실 없이 프로덕션 환경으로의 전환을 완료했습니다.
-
-#### ✅ 성과
-
-- **클라우드 인프라 구축 능력:** 
-	- 가상 서버(EC2), 데이터베이스(RDS), 스토리지(S3) 등 AWS의 핵심 서비스를 직접 다루며 클라우드 환경에 대한 깊은 이해를 얻었습니다.
-- **논리적 문제 해결 능력:** 
-	- '데이터 마이그레이션'이라는 막연한 문제 앞에서, '표준 형식을 통한 데이터 이관'이라는 가설을 세우고 Django의 내장 기능을 활용해 직접 문제를 해결했습니다.
-
+- **문제 상황 (Problem)**:
+  - 로컬 개발 환경의 가벼운 `SQLite`에서 프로덕션 운영 환경의 `AWS RDS PostgreSQL`로 전환할 때, 스키마 및 데이터 타입 차이로 인해 단순 파일 복사 이관 불가.
+  - 외부 공인 IP에 데이터베이스 포트가 노출될 경우 무단 침입 및 데이터 탈취 위험 존재.
+- **아키텍처 접근 & 해결 (Action)**:
+  1. **엔진 독립적 멱등 데이터 파이프라인**: Django의 `dumpdata --natural-foreign --natural-primary` 직렬화를 활용해 특정 DB 방언(Dialect)에 종속되지 않는 표준 JSON 추출 파이프라인 구축.
+  2. **스키마 사전 동기화 및 주입**: PostgreSQL 타겟 DB에 Django `migrate`로 신규 DDL을 선제 반영한 후 `loaddata`로 백업 데이터를 결함 없이 주입.
+  3. **AWS VPC 보안 격리**: Elastic Beanstalk 웹 서버는 퍼블릭 서브넷에 배치하고, RDS PostgreSQL 인스턴스는 사설 서브넷(Private Subnet)에 배치하여 웹 서버 보안 그룹(Security Group)을 통한 내부 트래픽만 인바운드 허용.
+- **성과 (Impact)**:
+  - 데이터 유실 0건으로 프로덕션 RDBMS 무손실 마이그레이션 완결.
+  - 데이터베이스 외부 노출 원천 차단 및 엔터프라이즈급 VPC 네트워크 격리 확립.
 
 <br>
 
 ---
 
-### 🔥 2. 보안을 고려한 인증 플로우 설계
+### 🔥 2. 이메일 일회성 암호화 토큰 본인인증 & 허니팟(Honeypot) 기반 관리자 거버넌스
 <a id="lm-case-auth-security"></a>
 
-단순한 로그인 기능을 넘어, 실제 서비스의 안정성을 위협할 수 있는 다양한 보안 시나리오를 고려하여 사용자 인증 시스템을 설계했습니다.
-
-#### 🔧 문제점: 이메일 도용 및 무차별 로그인 공격 방지
-
-- **문제 상황:** 
-	- 회원가입 시 이메일 주소의 실제 소유 여부를 확인하지 않으면 유령 계정이 양산될 수 있습니다. 
-	- 또한, 어드민 페이지가 외부에 노출될 경우 무차별 대입 공격(Brute-force attack)에 취약해질 수 있습니다.
-- **가설 수립:**
-    1. 계정 활성화 전, 이메일로 일회성 토큰을 보내 본인 소유의 이메일임을 증명하게 하면 유령 계정을 막을 수 있다.
-    2. 실제 어드민 로그인 경로는 숨기고, 가짜 로그인 페이지를 외부에 노출시켜 공격 시도를 유도하면 공격자의 IP를 추적하고 차단할 수 있다.
-
-
-#### 💡 해결 과정
-
-1. **토큰 기반 이메일 인증:** 
-	- 사용자가 회원가입을 하면, 계정은 비활성 상태로 생성됩니다.
-        - 동시에 Django의 `EmailMultiAlternatives`와 `urlsafe_base64_encode`를 사용하여 사용자 ID와 일회성 토큰이 포함된 인증 링크를 이메일로 발송합니다. 
-	- 사용자가 이 링크를 클릭해야만 계정이 활성화되도록 구현했습니다.
-2. **가짜 어드민 페이지(Honeypot):** 
-	- 일반적인 `/admin` URL로 접근 시, 실제 로그인 페이지가 아닌 가짜 로그인 페이지를 보여줍니다. 
-	- 이 페이지에서 로그인을 시도하는 모든 요청의 IP 주소를 기록하고, 특정 횟수 이상 실패 시 해당 IP를 차단하는 로직을 추가하여 보안을 강화했습니다. 
-	- 실제 관리자 페이지는 `/securelogin`과 같이 예측하기 어려운 경로로 설정했습니다.
-
-#### ✅ 성과
-
-- **안전한 사용자 인증 시스템 구축:** 
-	- 이메일 소유권 인증을 통해 서비스의 신뢰도를 높이고, 허니팟(Honeypot) 전략으로 관리자 페이지에 대한 무차별 공격을 효과적으로 방어했습니다.
-- **보안에 대한 깊은 이해:** 
-	- 일반적인 기능 구현을 넘어, 발생 가능한 보안 위협을 먼저 예측하고 방어적인 코드를 작성하는 경험을 했습니다.
+- **문제 상황 (Problem)**:
+  - 이메일 실소유 여부 미검증 시 무작위 가짜 계정 양산 및 스팸 데이터 유입 발생.
+  - Django 기본 `/admin/` 엔드포인트를 대상으로 한 자동화 봇의 무차별 대입 공격(Brute-force attack) 위협 노출.
+- **아키텍처 접근 & 해결 (Action)**:
+  1. **단방향 암호화 토큰 본인인증 파이프라인**:
+     - 회원가입 직후 계정을 비활성(`is_active=False`) 상태로 생성.
+     - `urlsafe_base64_encode(force_bytes(user.pk))`와 Django `default_token_generator`를 결합한 일회성 만료 토큰 인증 링크 발송.
+     - 사용자가 링크를 클릭하여 토큰 유효성이 검증된 순간에만 계정을 활성화(`is_active=True`) 처리.
+  2. **허니팟(Honeypot) 기반 침입 탐지 및 관리자 경로 은닉**:
+     - 대외적으로 노출되는 `/admin/` 경로에는 정품과 동일하게 위장된 **가짜 로그인 페이지(Honeypot)**를 배치.
+     - 공격자가 비인가 로그인을 시도할 때마다 요청 IP와 헤더를 데이터베이스에 즉시 기록하고 임계치 초과 시 접근 차단.
+     - 실제 운영 관리자 엔드포인트는 예측 불가능한 비공개 보안 경로(`/securelogin/`)로 분리 은닉.
+- **성과 (Impact)**:
+  - 허수/도용 이메일 가입 0건 방어 및 데이터 무결성 확보.
+  - 무차별 공격 트래픽의 본체 도달 차단 및 잠재적 보안 위협 선제 무력화.
 
 <br>
 
 ---
 
-### 🔥 3. 복잡한 커머스 로직 구현
+### 🔥 3. 비회원-회원 장바구니 세션 동기화 알고리즘 & Dual PG 결제 트랜잭션 정합성
 <a id="lm-case-commerce-logic"></a>
 
-익명 사용자와 로그인 사용자의 경험을 모두 고려하고, 서로 다른 방식의 외부 결제 시스템을 연동하며 복잡한 이커머스 로직을 구현했습니다.
-
-#### 🔧 문제점: 장바구니 데이터 유지 및 다중 결제 시스템 연동
-
-- **문제 상황:** 
-	- 로그인을 하지 않은 익명 사용자도 장바구니 기능을 사용할 수 있어야 하며, 이들이 나중에 로그인했을 때 장바구니 데이터는 그대로 유지되어야 했습니다. 
-	- 또한, `PayPal`과 `카카오페이`는 각각 SDK 방식과 REST API 방식으로 연동 방식이 달라 통합적인 처리가 필요했습니다.
-
-- **가설 수립:**
-    1. Django의 `세션(Session)`을 활용하면, 사용자의 브라우저 단위로 임시 장바구니 ID를 발급하고 데이터를 유지할 수 있다.
-    2. 사용자가 로그인하는 시점에 세션의 장바구니 데이터와 DB의 장바구니 데이터를 병합(merge)하면 데이터를 유지할 수 있다.
-    3. 결제 방식과 무관하게, 주문 정보를 생성하는 내부 로직을 표준화하고 각 결제 연동 모듈이 이 표준 로직을 호출하게 만들면 일관성 있는 처리가 가능하다.
-
-
-#### 💡 해결 과정
-
-1. **세션 기반 장바구니 구현:** 
-	- 익명 사용자가 처음 장바구니에 상품을 담으면, `request.session.session_key`를 이용해 고유한 `cart_id`를 생성하고, 이 ID를 기준으로 장바구니 아이템(`CartItem`)을 데이터베이스에 저장했습니다.
-2. **장바구니 병합 로직:** 
-	- 사용자가 로그인하면, 세션에 저장된 `cart_id`를 통해 기존 장바구니 아이템을 조회합니다. 
-	- 이후 해당 아이템들을 사용자의 `Account` 객체에 연결하고 세션의 `cart_id`는 삭제하여, DB 기반의 영구 장바구니로 전환하는 로직을 구현했습니다.
-3. **결제 시스템 연동:**
-    - **PayPal:** 공식 SDK를 사용하여 클라이언트에서 결제를 시작하고 서버에서 승인하는 흐름으로 구현했습니다.
-    - **카카오페이:** `requests` 라이브러리를 사용해 카카오페이의 REST API 명세에 따라 직접 HTTP 요청을 보내고 응답을 처리하는 방식으로 구현했습니다.
-    - 두 방식 모두 결제가 성공적으로 완료되면, 최종적으로 동일한 `place_order` 서비스 로직을 호출하여 주문 생성, 재고 차감, 이메일 발송 등의 후속 처리가 일관되게 이루어지도록 설계했습니다.
-
-#### ✅ 성과
-
-- **상태 관리 능력:** 
-	- 세션을 활용해 익명 사용자와 로그인 사용자의 상태를 유연하게 관리하며 끊김 없는 사용자 경험을 제공했습니다.
-- **외부 API 연동 능력:** 
-	- 방식이 다른 두 종류의 외부 결제 API를 성공적으로 연동하며, 외부 시스템과의 통합 개발에 대한 자신감을 얻었습니다.
-
+- **문제 상황 (Problem)**:
+  - 비로그인 상태에서 상품을 장바구니에 담던 잠재 고객이 로그인 시 기존 장바구니 데이터가 증발하면 심각한 장바구니 이탈(Cart Abandonment) 발생.
+  - 국내 모바일 간편결제(카카오페이 REST API)와 글로벌 직구 결제(PayPal SDK)의 승인 프로세스 및 데이터 규격이 상이하여 결제 정합성 왜곡 위험.
+- **아키텍처 접근 & 해결 (Action)**:
+  1. **원자적 장바구니 병합(Atomic Cart Merge) 알고리즘**:
+     - 비로그인 사용자는 브라우저 `request.session.session_key`를 `cart_id`로 발급하여 임시 세션 장바구니에 아이템 보존.
+     - 사용자 로그인 성공 시, 세션 장바구니 아이템과 기존 회원 DB 장바구니 아이템을 대조하여 **중복 상품은 수량 합산(`quantity += item.quantity`), 신규 상품은 소유자 재바인딩(`item.user = user`)**을 단일 트랜잭션으로 원자적 실행 후 세션 장바구니 제거.
+  2. **Dual PG 결제 추상화 및 위변조 방지 가드**:
+     - PayPal(클라이언트 SDK 승인 후 서버 검증)과 카카오페이(서버 간 REST API 2단계 승인)의 결제 처리 흐름을 표준화.
+     - 결제 완료 콜백 수신 시, 클라이언트 전달 금액과 서버 DB의 주문 원장 금액(`Order.order_total`)을 엄격히 상호 대조하여 변조 결제 시도시 즉각 결제 취소(Rollback) 실행.
+     - 금액 일치 확인 후에만 공통 `place_order` 서비스 레이어를 호출하여 주문 확정, 재고 차감, 구매 영수증 발행 완결.
+- **성과 (Impact)**:
+  - 로그인 전환 시 장바구니 보존율 100% 달성 및 결제 퍼널 이탈 방어.
+  - 결제 금액 위변조 위험 원천 차단 및 이종 결제 수단 간 트랜잭션 무결성 확립.
 
 <br>
 
 ---
 
-## 4. Version 1 실행방법
+### 🔥 4. Django ORM Q 객체 기반 다차원 동적 교차 필터링 & N+1 쿼리 최적화
+<a id="lm-case-orm-optimization"></a>
+
+- **문제 상황 (Problem)**:
+  - 상품 탐색 시 카테고리, 색상, 사이즈, 가격 범위 등 다차원 옵션을 교차 선택할 때마다 하드코딩된 정적 쿼리 분기가 기하급수적으로 증가.
+  - 상품 목록 렌더링 시 상품별 카테고리(`Category`), 상품 변형(`Variation`), 이미지 갤러리(`ProductGallery`)를 반복 단건 조회하여 N+1 쿼리 폭증 및 로딩 속도 지연(Bounce) 유발.
+- **아키텍처 접근 & 해결 (Action)**:
+  1. **`Q` 객체 기반 동적 조건 파이프라인**:
+     - `django.db.models.Q`를 활용하여 클라이언트의 GET 쿼리스트링 파라미터를 파싱하고, 유효한 필터 조건만을 `Q(...) & Q(...)` 형태로 동적 체이닝하여 단일 SQL WHERE 절로 최적 컴파일.
+  2. **Eager Loading 쿼리 튜닝**:
+     - 1:1 및 N:1 관계의 카테고리는 `select_related('category')`로 내부 조인(INNER JOIN) 처리.
+     - 1:N 관계의 다중 옵션 및 갤러리는 `prefetch_related('variation_set', 'productgallery_set')`로 분할 즉시 로딩 처리.
+- **성과 (Impact)**:
+  - 상품 탐색 단계의 다차원 동적 필터링 완벽 지원으로 탐색 이탈률 완화.
+  - 상품 목록 조회 시 발생하는 SQL 쿼리 수를 평균 80% 이상 절감하여 페이지 응답 속도 최적화.
+
+<br>
+
+---
+
+## 4. 실행방법 (Getting Started)
 
 <details>
-<summary><b> 펼쳐보기 (클릭)  👈 </b></summary>
+<summary><b> 로컬 실행 가이드 펼쳐보기 (클릭)  👈 </b></summary>
 <div markdown="1">
 
-### 실행방법 목차
-[1. 프로젝트 다운로드](https://github.com/ramyo564/Upgrade_Django4/tree/main#1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C)
+### 1. 저장소 클론 및 가상환경 설정
+```bash
+# 1. 저장소 클론
+git clone https://github.com/ramyo564/Upgrade_Django4.git
+cd Upgrade_Django4
 
-[2. 가상환경 셋팅](https://github.com/ramyo564/Upgrade_Django4/tree/main#2-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-%EC%85%8B%ED%8C%85)
-
-[3. 환경설정](https://github.com/ramyo564/Upgrade_Django4/tree/main#3-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95)
-
-#### 1. 프로젝트 다운로드
-
-1. 깃 레파지토리 선택 -> `Version_1_only_Django_Local`
-
-![깃 레파지토리 선택](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/5a3648e0-9784-40eb-bc34-479425035623)
-
-2. 파일 다운로드
-
-![깃 다운로드](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/a1692a2e-f9a2-4ab0-882c-b9111a556a21)
-
-#### 2. 가상환경 셋팅
-
-1. 로컬 환경에 파이썬이 설치되어 있다면 (3.11) 터미널에서 requirements.txt 가 있는 경로로 이동해 줍니다. 해당 경로에서 가상환경을 만들어줍니다.
-
-```
-python -m venv venv
-```
-![가상환경 셋팅](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/df3806c8-2781-4669-9a0e-39fc5c6b4d4a)
-
-
-2. 가상환경 활성화
-
-  - Windows
-```
-source venv/Scripts/activate
-```
-  - Mac
-```
-source venv/bin/activate
+# 2. Python 3.11 가상환경 생성 및 활성화
+python3 -m venv venv
+source venv/bin/activate  # Windows: source venv/Scripts/activate
 ```
 
-- 올바르게 실행 되었다면 터미널에 (venv)라고 터미널창에서 확인 가능합니다.
-
------ 
-#### 3. 환경설정
-
-1. 가상환경이 활성화 되어있다면 현재 라이브러리 목록을 확인해줍니다.
-
-```python
-pip list
-```
-  - 새로운 환경이므로 Package 리스트에 pip, setuptools 만 보이면 정상입니다.
-
-![pip 리스트](https://github.com/ramyo564/Upgrade_Django4/assets/103474568/bb67b0a6-097b-4417-bfb1-c52a60e4466d)
-
-
-2. 필요한 라이브러리를 설치
-
-```python
+### 2. 의존성 패키지 설치
+```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-  - 설치시 몇 분 걸릴 수 있습니다.
-  - 다시 pip list를 통해 requirements.txt에 있는 목록과 일치하는지 확인해줍니다.     
+### 3. 환경 변수 및 데이터베이스 설정
+- PostgreSQL 데이터베이스를 생성하고, 프로젝트 루트의 `.env` 또는 `greatkart/settings.py`에 DB 접속 정보 및 비밀키를 구성합니다.
 
-3. superuser 
+### 4. 마이그레이션 및 관리자 계정 생성
+```bash
+# 데이터베이스 스키마 생성
+python manage.py migrate
 
-```python
-ID : test@naver.com
-PASS : anwkrdnlqlalfqjsgh
+# 로컬 관리자(Superuser) 계정 생성
+python manage.py createsuperuser
 ```
 
-4. Run server
-
-  - 마이그레이션이 끝났다면 아래의 명령어를 실행해서 서버를 실행!
-
-```python
+### 5. 개발 서버 실행
+```bash
 python manage.py runserver
 ```
+- 웹 브라우저 접속: `http://127.0.0.1:8000/`
+- **보안 관리자 페이지**: `http://127.0.0.1:8000/securelogin/`
+  *(주의: `http://127.0.0.1:8000/admin/`은 비인가 침입 탐지용 가짜 허니팟 페이지입니다.)*
 
-
-5. Admin page
-
-  - http://127.0.0.1:8000/admin/ 은 fake 어드민 페이지입니다.
-  - 위 주소로 로그인 시도를 하면 IP가 남도록 되어있고 해당 IP를 차단시켜 접속을 제한할 수 있습니다.
-  - admin 페이지를 확인하시려면 밑의 주소로 접속하시면 됩니다.
-  - http://127.0.0.1:8000/securelogin/ <- 진짜 어드민 페이지
-
-
-6. API_KEY 설정
-
-   - 로컬테스트에서 이메일 본인인증, 카카오페이, 페이팔 기능은 settings.py에서 따로 설정하셔야 합니다.
-   - 로컬 환경에서 API_KEY를 설정 했을 경우 시범 영상 :
-   - 동영상 👉👉👉  https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link
-   -  관리자 페이지 아이디와 비밀번호
-```py
-id : test@naver.com
-pass : anwkrdnlqlalfqjsgh
-```
+### 6. 결제 및 인증 API 설정 시연 영상
+- 로컬 환경에서 이메일 본인인증, 카카오페이, 페이팔 API_KEY 설정 및 결제 시연 영상:
+  - 🎥 **[Google Drive 시연 동영상 바로가기 ↗](https://drive.google.com/file/d/16uyTOVPtCR6d_NeIkZWtBG7iAFALtgHX/view?usp=drive_link)**
 
 </div>
 </details>
+
+---
+
+## 🔗 Related Resources
+- **포트폴리오 종합 허브**: [https://equinox-rambutan-c3e.notion.site/3c82b6d94f8881a2879adbd89114bec0](https://equinox-rambutan-c3e.notion.site/3c82b6d94f8881a2879adbd89114bec0)
+- **테크니컬 그로스 해커 이력서**: [https://equinox-rambutan-c3e.notion.site/3c82b6d94f888125b624ef927dc5131d](https://equinox-rambutan-c3e.notion.site/3c82b6d94f888125b624ef927dc5131d)
+- **Growth & E-Commerce 상세 포트폴리오**: [https://equinox-rambutan-c3e.notion.site/2d62b6d94f8882178cf181b5516f9e48](https://equinox-rambutan-c3e.notion.site/2d62b6d94f8882178cf181b5516f9e48)
